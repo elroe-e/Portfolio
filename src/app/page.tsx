@@ -6,6 +6,7 @@ import { Development } from "@/components/Development";
 import { Footer } from "@/components/Footer";
 import { Hero } from "@/components/Hero";
 import { Horizon } from "@/components/Horizon";
+import { Intro } from "@/components/Intro";
 import { Marquee } from "@/components/Marquee";
 import { Nav } from "@/components/Nav";
 import { Photography } from "@/components/Photography";
@@ -27,6 +28,7 @@ const personSchema = {
 export default function Home() {
   return (
     <>
+      <Intro />
       <Background />
       <ScrollProgress />
       <SmoothScroll />

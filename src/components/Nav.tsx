@@ -127,7 +127,7 @@ export function Nav() {
     <>
       <header
         id="header"
-        className={`fixed inset-x-0 top-0 z-50 animate-fade-in border-b transition-colors duration-500 ${
+        className={`fixed inset-x-0 top-0 z-50 animate-fade-in border-b [animation-delay:var(--intro)] transition-colors duration-500 ${
           scrolled && !open ? "border-line bg-ink/90" : "border-transparent"
         }`}
       >

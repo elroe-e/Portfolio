@@ -8,7 +8,7 @@ function ViewfinderCorners() {
   return (
     <div
       aria-hidden
-      className="pointer-events-none absolute inset-x-5 bottom-6 top-24 hidden animate-fade-in [animation-delay:900ms] sm:inset-x-8 md:block lg:inset-x-12"
+      className="pointer-events-none absolute inset-x-5 bottom-6 top-24 hidden animate-fade-in [animation-delay:calc(var(--intro)_+_900ms)] sm:inset-x-8 md:block lg:inset-x-12"
     >
       <span className={`${corner} left-0 top-0 border-l border-t`} />
       <span className={`${corner} right-0 top-0 border-r border-t`} />
@@ -28,7 +28,7 @@ export function Hero() {
 
       <div className="relative mx-auto w-full max-w-[1400px] md:px-8">
         {site.available && (
-          <p className="flex animate-fade-up items-center gap-3 font-mono text-[11px] uppercase tracking-[0.22em] text-ash [animation-delay:150ms]">
+          <p className="flex animate-fade-up items-center gap-3 font-mono text-[11px] uppercase tracking-[0.22em] text-ash [animation-delay:calc(var(--intro)_+_150ms)]">
             <span className="relative flex size-2">
               <span className="absolute inline-flex size-full animate-ping rounded-full bg-emerald-400/70" />
               <span className="relative inline-flex size-2 rounded-full bg-emerald-400" />
@@ -39,25 +39,25 @@ export function Hero() {
 
         <h1 className="mt-6 text-[clamp(3.25rem,17vw,13rem)] font-medium leading-[0.86] tracking-[-0.045em]">
           <span className="block overflow-hidden pb-[0.06em]">
-            <span className="block animate-rise [animation-delay:200ms]">
+            <span className="block animate-rise [animation-delay:calc(var(--intro)_+_200ms)]">
               {site.firstName}
             </span>
           </span>
           <span className="block overflow-hidden pb-[0.16em]">
-            <span className="block animate-rise font-serif font-normal italic tracking-[-0.02em] [animation-delay:320ms]">
+            <span className="block animate-rise font-serif font-normal italic tracking-[-0.02em] [animation-delay:calc(var(--intro)_+_320ms)]">
               {site.lastName}
             </span>
           </span>
         </h1>
 
         <div className="mt-6 grid gap-8 md:mt-8 md:grid-cols-[1fr_auto] md:items-end">
-          <p className="max-w-xl animate-fade-up text-lg leading-relaxed text-bone/80 [animation-delay:650ms] md:text-xl">
+          <p className="max-w-xl animate-fade-up text-lg leading-relaxed text-bone/80 [animation-delay:calc(var(--intro)_+_650ms)] md:text-xl">
             Photographer{" "}
             <span className="font-serif italic text-ember">&amp;</span>{" "}
             full-stack developer. {site.tagline}
           </p>
 
-          <div className="flex animate-fade-up flex-wrap gap-3 [animation-delay:800ms]">
+          <div className="flex animate-fade-up flex-wrap gap-3 [animation-delay:calc(var(--intro)_+_800ms)]">
             <Magnetic>
               <ButtonLink href="#photography">See photography</ButtonLink>
             </Magnetic>
@@ -69,7 +69,7 @@ export function Hero() {
           </div>
         </div>
 
-        <div className="mt-12 flex animate-fade-in items-center justify-between border-t border-line pt-5 font-mono text-[11px] uppercase tracking-[0.2em] text-ash [animation-delay:1000ms] md:mt-16">
+        <div className="mt-12 flex animate-fade-in items-center justify-between border-t border-line pt-5 font-mono text-[11px] uppercase tracking-[0.2em] text-ash [animation-delay:calc(var(--intro)_+_1000ms)] md:mt-16">
           <a
             href="#about"
             className="group flex items-center gap-3 transition-colors hover:text-bone"

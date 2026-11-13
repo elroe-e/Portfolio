@@ -14,6 +14,9 @@
   --ash: #a39f97; /* secondary text */
   --ember: #ff6a3d; /* accent */
   --line: rgb(255 255 255 / 0.1); /* hairlines */
+
+  /* How long the opening animation holds before the page is revealed. */
+  --intro: 1500ms;
 }
 
 @theme inline {
@@ -204,10 +207,80 @@ html.is-locked {
 }
 
 /* ------------------------------------------------------------------ */
+/* Intro: the shutter that opens when the page first loads              */
+/* ------------------------------------------------------------------ */
+
+.intro {
+  /* Never in the way: clicks and scrolling pass straight through. */
+  pointer-events: none;
+}
+
+.intro-shutter {
+  animation: 1000ms var(--ease-expo) var(--intro) forwards;
+}
+
+.intro-shutter-top {
+  animation-name: intro-open-up;
+}
+
+.intro-shutter-bottom {
+  animation-name: intro-open-down;
+}
+
+.intro-mark {
+  animation:
+    intro-focus 700ms var(--ease-expo) both,
+    intro-fade 350ms ease calc(var(--intro) - 250ms) forwards;
+}
+
+.intro-dot {
+  animation: shimmer 900ms ease-in-out infinite;
+}
+
+@keyframes intro-open-up {
+  to {
+    transform: translateY(-101%);
+  }
+}
+
+@keyframes intro-open-down {
+  to {
+    transform: translateY(101%);
+  }
+}
+
+@keyframes intro-focus {
+  from {
+    opacity: 0;
+    transform: scale(1.12);
+    filter: blur(8px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes intro-fade {
+  to {
+    opacity: 0;
+  }
+}
+
+/* ------------------------------------------------------------------ */
 /* Reduced motion                                                      */
 /* ------------------------------------------------------------------ */
 
 @media (prefers-reduced-motion: reduce) {
+  :root {
+    --intro: 0ms;
+  }
+
+  .intro {
+    display: none;
+  }
+
   html {
     scroll-behavior: auto;
   }
