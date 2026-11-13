@@ -49,7 +49,9 @@ export type GalleryItem =
       tone: number;
     };
 
-const placeholderFrames: Array<[category: string, width: number, height: number]> = [
+const placeholderFrames: Array<
+  [category: string, width: number, height: number]
+> = [
   ["Portraits", 4, 5],
   ["Street", 3, 2],
   ["Events", 1, 1],

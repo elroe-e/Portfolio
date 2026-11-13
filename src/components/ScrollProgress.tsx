@@ -5,7 +5,11 @@ import { motion, useScroll, useSpring } from "motion/react";
 /** A thin line across the top of the screen showing how far the page has scrolled. */
 export function ScrollProgress() {
   const { scrollYProgress } = useScroll();
-  const scaleX = useSpring(scrollYProgress, { stiffness: 140, damping: 30, mass: 0.3 });
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 140,
+    damping: 30,
+    mass: 0.3,
+  });
 
   return (
     <motion.div

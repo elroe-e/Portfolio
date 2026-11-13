@@ -14,7 +14,9 @@ export default function NotFound() {
       </p>
       <h1 className="mt-6 text-[clamp(3rem,10vw,9rem)] font-medium leading-[0.9] tracking-[-0.045em]">
         Nothing
-        <span className="block font-serif font-normal italic">to see here.</span>
+        <span className="block font-serif font-normal italic">
+          to see here.
+        </span>
       </h1>
       <ButtonLink href="/" className="mt-10">
         Back to the portfolio

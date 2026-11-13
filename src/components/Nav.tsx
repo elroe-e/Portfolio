@@ -38,12 +38,16 @@ function useActiveSection() {
 function MobileMenu({ onClose }: { onClose: () => void }) {
   useOverlay(onClose, BEHIND_MENU);
 
-  const contacts = [site.contact.telegram, site.contact.instagram, site.contact.phone];
+  const contacts = [
+    site.contact.telegram,
+    site.contact.instagram,
+    site.contact.phone,
+  ];
 
   return (
     <motion.div
       id="mobile-menu"
-      className="fixed inset-0 z-40 flex flex-col overflow-y-auto bg-ink/95 px-5 pb-8 pt-24 backdrop-blur-xl sm:px-8 md:hidden"
+      className="fixed inset-0 z-40 flex flex-col overflow-y-auto bg-ink/[0.98] px-5 pb-8 pt-24 sm:px-8 md:hidden"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
@@ -59,7 +63,11 @@ function MobileMenu({ onClose }: { onClose: () => void }) {
                 className="flex items-baseline gap-4 py-4"
                 initial={{ y: "110%" }}
                 animate={{ y: 0 }}
-                transition={{ duration: 0.7, delay: 0.05 + index * 0.06, ease: EXPO }}
+                transition={{
+                  duration: 0.7,
+                  delay: 0.05 + index * 0.06,
+                  ease: EXPO,
+                }}
               >
                 <span className="font-mono text-[11px] text-ember">
                   {String(index + 1).padStart(2, "0")}
@@ -81,7 +89,10 @@ function MobileMenu({ onClose }: { onClose: () => void }) {
       >
         {contacts.map((contact) => (
           <li key={contact.label}>
-            <a href={contact.href} className="flex items-center justify-between py-1">
+            <a
+              href={contact.href}
+              className="flex items-center justify-between py-1"
+            >
               <span>{contact.label}</span>
               <span className="text-bone">{contact.value}</span>
             </a>
@@ -117,9 +128,7 @@ export function Nav() {
       <header
         id="header"
         className={`fixed inset-x-0 top-0 z-50 animate-fade-in border-b transition-colors duration-500 ${
-          scrolled && !open
-            ? "border-line bg-ink/70 backdrop-blur-xl"
-            : "border-transparent"
+          scrolled && !open ? "border-line bg-ink/90" : "border-transparent"
         }`}
       >
         <div className="mx-auto flex h-16 max-w-[1400px] items-center justify-between px-5 sm:px-8 lg:px-12">
@@ -150,7 +159,11 @@ export function Nav() {
                         <motion.span
                           layoutId="nav-active"
                           className="absolute inset-0 rounded-full bg-white/10"
-                          transition={{ type: "spring", stiffness: 380, damping: 32 }}
+                          transition={{
+                            type: "spring",
+                            stiffness: 380,
+                            damping: 32,
+                          }}
                         />
                       )}
                       <span className="relative">{link.label}</span>

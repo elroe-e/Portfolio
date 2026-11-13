@@ -88,7 +88,10 @@ function ProjectRow({ project, index }: { project: Project; index: number }) {
     <article className="grid grid-cols-1 items-center gap-8 lg:grid-cols-12 lg:gap-14">
       <Reveal className={`lg:col-span-7 ${flipped ? "lg:order-2" : ""}`}>
         <Tilt>
-          <BrowserFrame project={project} screenshot={projectScreenshot(project.slug)} />
+          <BrowserFrame
+            project={project}
+            screenshot={projectScreenshot(project.slug)}
+          />
         </Tilt>
       </Reveal>
 
@@ -106,23 +109,34 @@ function ProjectRow({ project, index }: { project: Project; index: number }) {
         <h3 className="mt-5 text-[clamp(2.25rem,5vw,4rem)] font-medium leading-none tracking-[-0.035em]">
           {project.title}
         </h3>
-        <p className="mt-5 max-w-md text-lg leading-relaxed text-bone/75">{project.summary}</p>
+        <p className="mt-5 max-w-md text-lg leading-relaxed text-bone/75">
+          {project.summary}
+        </p>
 
         <dl className="mt-8 grid max-w-md grid-cols-2 gap-x-6 gap-y-5 border-t border-line pt-6 text-sm">
           <div>
-            <dt className="font-mono text-[10px] uppercase tracking-[0.22em] text-ash">Role</dt>
+            <dt className="font-mono text-[10px] uppercase tracking-[0.22em] text-ash">
+              Role
+            </dt>
             <dd className="mt-1.5">{project.role}</dd>
           </div>
           <div>
-            <dt className="font-mono text-[10px] uppercase tracking-[0.22em] text-ash">Address</dt>
+            <dt className="font-mono text-[10px] uppercase tracking-[0.22em] text-ash">
+              Address
+            </dt>
             <dd className="mt-1.5">{project.displayUrl}</dd>
           </div>
           {project.stack.length > 0 && (
             <div className="col-span-2">
-              <dt className="font-mono text-[10px] uppercase tracking-[0.22em] text-ash">Built with</dt>
+              <dt className="font-mono text-[10px] uppercase tracking-[0.22em] text-ash">
+                Built with
+              </dt>
               <dd className="mt-2.5 flex flex-wrap gap-2">
                 {project.stack.map((tool) => (
-                  <span key={tool} className="rounded-full border border-line px-3 py-1 text-xs">
+                  <span
+                    key={tool}
+                    className="rounded-full border border-line px-3 py-1 text-xs"
+                  >
                     {tool}
                   </span>
                 ))}
@@ -155,7 +169,10 @@ function NextProject({ index }: { index: number }) {
       >
         <span className="flex items-center justify-between">
           <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-ash">
-            <span className="text-ember">{String(index + 1).padStart(2, "0")}</span> — Next build
+            <span className="text-ember">
+              {String(index + 1).padStart(2, "0")}
+            </span>{" "}
+            — Next build
           </span>
           <span className="grid size-12 place-items-center rounded-full border border-line transition-all duration-500 ease-expo group-hover:rotate-90 group-hover:border-ember group-hover:bg-ember group-hover:text-ink">
             <Plus className="size-5" />
@@ -164,10 +181,12 @@ function NextProject({ index }: { index: number }) {
 
         <span className="mt-10 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <span className="text-[clamp(3rem,9vw,7.5rem)] font-medium leading-[0.9] tracking-[-0.045em]">
-            Yours<span className="font-serif font-normal italic text-ember">?</span>
+            Yours
+            <span className="font-serif font-normal italic text-ember">?</span>
           </span>
           <span className="max-w-sm text-base leading-relaxed text-ash md:pb-3 md:text-lg">
-            More projects are on the way. If you need a website, the next one here could be yours.
+            More projects are on the way. If you need a website, the next one
+            here could be yours.
           </span>
         </span>
       </a>
@@ -179,8 +198,14 @@ export function Development() {
   return (
     <section id="development" className="px-5 py-20 sm:px-8 md:py-28 lg:px-12">
       <div className="mx-auto max-w-[1400px]">
-        <SectionHeading index="03" label="Development" plain="Built for" accent="the web.">
-          I build websites end to end — the part you see and the part that makes it work.
+        <SectionHeading
+          index="03"
+          label="Development"
+          plain="Built for"
+          accent="the web."
+        >
+          I build websites end to end — the part you see and the part that makes
+          it work.
         </SectionHeading>
 
         <div className="space-y-20 md:space-y-28">

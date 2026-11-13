@@ -147,6 +147,11 @@ body {
   border-radius: 4px;
 }
 
+/* The smooth-scroll script does its own easing; the browser's would fight it. */
+html.lenis {
+  scroll-behavior: auto;
+}
+
 /* Anchored sections stop below the fixed navigation bar. */
 section[id] {
   scroll-margin-top: 5rem;
@@ -170,11 +175,7 @@ html.is-locked {
 /* Soft colour glows that sit behind the 3D scene. */
 @utility backdrop-glow {
   background:
-    radial-gradient(
-      60% 55% at 85% 0%,
-      rgb(255 106 61 / 0.16),
-      transparent 62%
-    ),
+    radial-gradient(60% 55% at 85% 0%, rgb(255 106 61 / 0.16), transparent 62%),
     radial-gradient(
       55% 50% at 0% 100%,
       rgb(88 116 255 / 0.11),

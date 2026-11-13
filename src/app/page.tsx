@@ -1,6 +1,7 @@
 import { About } from "@/components/About";
 import { Background } from "@/components/background/Background";
 import { Contact } from "@/components/Contact";
+import { Cursor } from "@/components/Cursor";
 import { Development } from "@/components/Development";
 import { Footer } from "@/components/Footer";
 import { Hero } from "@/components/Hero";
@@ -9,6 +10,7 @@ import { Marquee } from "@/components/Marquee";
 import { Nav } from "@/components/Nav";
 import { Photography } from "@/components/Photography";
 import { ScrollProgress } from "@/components/ScrollProgress";
+import { SmoothScroll } from "@/components/SmoothScroll";
 import { site } from "@/content/site";
 
 /** Structured data that tells search engines who this site is about. */
@@ -27,6 +29,8 @@ export default function Home() {
     <>
       <Background />
       <ScrollProgress />
+      <SmoothScroll />
+      <Cursor />
       <Nav />
 
       <main id="main" className="relative z-10">

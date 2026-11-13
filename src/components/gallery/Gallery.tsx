@@ -30,8 +30,14 @@ const ROWS_PER_COLUMN_WIDTH = {
 function rowSpans(item: GalleryItem) {
   const proportion = item.height / item.width;
   return {
-    "--rows-two": Math.max(2, Math.round(proportion * ROWS_PER_COLUMN_WIDTH.two) + 1),
-    "--rows-three": Math.max(2, Math.round(proportion * ROWS_PER_COLUMN_WIDTH.three) + 1),
+    "--rows-two": Math.max(
+      2,
+      Math.round(proportion * ROWS_PER_COLUMN_WIDTH.two) + 1,
+    ),
+    "--rows-three": Math.max(
+      2,
+      Math.round(proportion * ROWS_PER_COLUMN_WIDTH.three) + 1,
+    ),
   } as CSSProperties;
 }
 
@@ -53,37 +59,38 @@ function Tile({
       className="pb-[2.6cqw] [grid-row-end:span_var(--rows-two)] lg:pb-[1.2cqw] lg:[grid-row-end:span_var(--rows-three)]"
       style={rowSpans(item)}
     >
-    <motion.button
-      type="button"
-      onClick={onOpen}
-      aria-label={`Open in viewer: ${label(item)}`}
-      className="group relative block h-full w-full overflow-hidden rounded-xl bg-coal text-left"
-      initial={{ opacity: 0, y: 32 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "0px 0px -6% 0px" }}
-      transition={{ duration: 0.9, delay: (index % 3) * 0.07, ease: EXPO }}
-    >
-      <span className="absolute inset-0 transition-transform duration-[900ms] ease-expo group-hover:scale-[1.045] group-focus-visible:scale-[1.045]">
-        <Frame item={item} sizes="(min-width: 1024px) 33vw, 50vw" />
-      </span>
+      <motion.button
+        type="button"
+        data-cursor="view"
+        onClick={onOpen}
+        aria-label={`Open in viewer: ${label(item)}`}
+        className="group relative block h-full w-full overflow-hidden rounded-xl bg-coal text-left"
+        initial={{ opacity: 0, y: 32 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "0px 0px -6% 0px" }}
+        transition={{ duration: 0.9, delay: (index % 3) * 0.07, ease: EXPO }}
+      >
+        <span className="absolute inset-0 transition-transform duration-[900ms] ease-expo group-hover:scale-[1.045] group-focus-visible:scale-[1.045]">
+          <Frame item={item} sizes="(min-width: 1024px) 33vw, 50vw" />
+        </span>
 
-      {/* Caption, shown on hover and keyboard focus */}
-      <span className="pointer-events-none absolute inset-0 flex items-end justify-between gap-3 bg-linear-to-t from-black/70 via-black/10 to-transparent p-3 opacity-0 transition-opacity duration-500 group-hover:opacity-100 group-focus-visible:opacity-100 sm:p-4">
-        <span className="min-w-0">
-          <span className="block font-mono text-[10px] uppercase tracking-[0.2em] text-bone/70">
-            {item.category}
-          </span>
-          {item.title && (
-            <span className="mt-1 block truncate text-sm font-medium text-bone sm:text-base">
-              {item.title}
+        {/* Caption, shown on hover and keyboard focus */}
+        <span className="pointer-events-none absolute inset-0 flex items-end justify-between gap-3 bg-linear-to-t from-black/70 via-black/10 to-transparent p-3 opacity-0 transition-opacity duration-500 group-hover:opacity-100 group-focus-visible:opacity-100 sm:p-4">
+          <span className="min-w-0">
+            <span className="block font-mono text-[10px] uppercase tracking-[0.2em] text-bone/70">
+              {item.category}
             </span>
-          )}
+            {item.title && (
+              <span className="mt-1 block truncate text-sm font-medium text-bone sm:text-base">
+                {item.title}
+              </span>
+            )}
+          </span>
+          <span className="grid size-9 shrink-0 place-items-center rounded-full bg-bone text-ink">
+            <ArrowUpRight className="size-4" />
+          </span>
         </span>
-        <span className="grid size-9 shrink-0 place-items-center rounded-full bg-bone text-ink">
-          <ArrowUpRight className="size-4" />
-        </span>
-      </span>
-    </motion.button>
+      </motion.button>
     </div>
   );
 }
@@ -101,11 +108,15 @@ export function Gallery({ items }: { items: GalleryItem[] }) {
   }, [items]);
 
   const visible = useMemo(
-    () => (filter === ALL ? items : items.filter((item) => item.category === filter)),
+    () =>
+      filter === ALL ? items : items.filter((item) => item.category === filter),
     [items, filter],
   );
 
-  const filters: Array<[name: string, count: number]> = [[ALL, items.length], ...categories];
+  const filters: Array<[name: string, count: number]> = [
+    [ALL, items.length],
+    ...categories,
+  ];
 
   return (
     <>
@@ -130,7 +141,9 @@ export function Gallery({ items }: { items: GalleryItem[] }) {
                 }`}
               >
                 {name}
-                <sup className="ml-1.5 font-mono text-[10px] opacity-60">{count}</sup>
+                <sup className="ml-1.5 font-mono text-[10px] opacity-60">
+                  {count}
+                </sup>
               </button>
             );
           })}

@@ -1,6 +1,11 @@
 "use client";
 
-import { motion, useMotionTemplate, useMotionValue, useSpring } from "motion/react";
+import {
+  motion,
+  useMotionTemplate,
+  useMotionValue,
+  useSpring,
+} from "motion/react";
 import type { PointerEvent, ReactNode } from "react";
 
 const SPRING = { stiffness: 170, damping: 20, mass: 0.6 };

@@ -9,7 +9,10 @@ import { Component, type ReactNode, useEffect, useState } from "react";
 const Scene = dynamic(() => import("./Scene"), { ssr: false });
 
 /** If WebGL is unavailable the scene is skipped and the gradient backdrop stays. */
-class SceneBoundary extends Component<{ children: ReactNode }, { failed: boolean }> {
+class SceneBoundary extends Component<
+  { children: ReactNode },
+  { failed: boolean }
+> {
   state = { failed: false };
 
   static getDerivedStateFromError() {
@@ -31,7 +34,9 @@ export function Background() {
 
   useEffect(() => {
     if ("requestIdleCallback" in window) {
-      const id = window.requestIdleCallback(() => setMounted(true), { timeout: 1200 });
+      const id = window.requestIdleCallback(() => setMounted(true), {
+        timeout: 1200,
+      });
       return () => window.cancelIdleCallback(id);
     }
     const timer = setTimeout(() => setMounted(true), 200);
@@ -39,10 +44,16 @@ export function Background() {
   }, []);
 
   return (
-    <div aria-hidden className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
+    <div
+      aria-hidden
+      className="pointer-events-none fixed inset-0 z-0 overflow-hidden"
+    >
       <div className="backdrop-glow absolute inset-0" />
 
-      <motion.div style={{ opacity }} className="absolute left-0 top-0 h-lvh w-full">
+      <motion.div
+        style={{ opacity }}
+        className="absolute left-0 top-0 h-lvh w-full"
+      >
         <div
           className={`h-full w-full transition-opacity duration-[1800ms] ease-out ${
             ready ? "opacity-100" : "opacity-0"

@@ -1,5 +1,10 @@
 import { site } from "@/content/site";
-import { ArrowUpRight, InstagramIcon, PhoneIcon, TelegramIcon } from "./ui/icons";
+import {
+  ArrowUpRight,
+  InstagramIcon,
+  PhoneIcon,
+  TelegramIcon,
+} from "./ui/icons";
 import { Reveal, RevealLine } from "./ui/Reveal";
 import { SectionLabel } from "./ui/SectionHeading";
 
@@ -11,7 +16,10 @@ const channels = [
 
 export function Contact() {
   return (
-    <section id="contact" className="px-5 pb-24 pt-20 sm:px-8 md:pb-32 md:pt-28 lg:px-12">
+    <section
+      id="contact"
+      className="px-5 pb-24 pt-20 sm:px-8 md:pb-32 md:pt-28 lg:px-12"
+    >
       <div className="mx-auto max-w-[1400px]">
         <Reveal>
           <SectionLabel index="05" label="Contact" />
@@ -34,7 +42,9 @@ export function Contact() {
               <Reveal delay={index * 0.08}>
                 <a
                   href={href}
-                  {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                  {...(external
+                    ? { target: "_blank", rel: "noopener noreferrer" }
+                    : {})}
                   className="group relative flex items-center justify-between gap-5 overflow-hidden px-1 py-6 sm:px-4 md:py-9"
                 >
                   {/* Colour sweep on hover and keyboard focus */}
@@ -59,9 +69,13 @@ export function Contact() {
                   </span>
 
                   <span className="relative flex items-center gap-6 text-ash transition-colors duration-300 group-hover:text-ink group-focus-visible:text-ink">
-                    <span className="hidden font-mono text-base md:block lg:text-lg">{value}</span>
+                    <span className="hidden font-mono text-base md:block lg:text-lg">
+                      {value}
+                    </span>
                     <ArrowUpRight className="size-6 transition-transform duration-500 ease-expo group-hover:rotate-45 group-focus-visible:rotate-45 md:size-8" />
-                    {external && <span className="sr-only">(opens in a new tab)</span>}
+                    {external && (
+                      <span className="sr-only">(opens in a new tab)</span>
+                    )}
                   </span>
                 </a>
               </Reveal>

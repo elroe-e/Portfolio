@@ -17,7 +17,7 @@ export function ButtonLink({
   const styles =
     variant === "solid"
       ? "bg-bone text-ink hover:bg-ember"
-      : "border border-line bg-white/[0.03] text-bone backdrop-blur-sm hover:border-bone/60";
+      : "border border-line bg-white/[0.03] text-bone hover:border-bone/60";
 
   return (
     <a

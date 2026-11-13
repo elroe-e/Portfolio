@@ -12,13 +12,21 @@ const EXPO = [0.16, 1, 0.3, 1] as const;
 const BEHIND_VIEWER = ["header", "main", "footer"] as const;
 
 const slide = {
-  enter: (direction: number) => ({ opacity: 0, x: direction * 70, scale: 0.98 }),
+  enter: (direction: number) => ({
+    opacity: 0,
+    x: direction * 70,
+    scale: 0.98,
+  }),
   center: { opacity: 1, x: 0, scale: 1 },
-  exit: (direction: number) => ({ opacity: 0, x: direction * -70, scale: 0.98 }),
+  exit: (direction: number) => ({
+    opacity: 0,
+    x: direction * -70,
+    scale: 0.98,
+  }),
 };
 
 const controlButton =
-  "grid size-11 place-items-center rounded-full border border-white/15 bg-white/5 text-bone backdrop-blur transition-colors duration-300 hover:bg-bone hover:text-ink";
+  "grid size-11 place-items-center rounded-full border border-white/15 bg-white/5 text-bone transition-colors duration-300 hover:bg-bone hover:text-ink";
 
 /**
  * Full-screen photo viewer.
@@ -78,7 +86,7 @@ export function Lightbox({
       role="dialog"
       aria-modal="true"
       aria-label="Photo viewer"
-      className="fixed inset-0 z-[70] flex flex-col bg-black/92 backdrop-blur-md"
+      className="fixed inset-0 z-[70] flex flex-col bg-black/95"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
@@ -91,7 +99,9 @@ export function Lightbox({
           className="font-mono text-xs uppercase tracking-[0.2em] text-ash"
         >
           <span className="sr-only">Photo </span>
-          <span className="text-bone">{String(index + 1).padStart(2, "0")}</span>
+          <span className="text-bone">
+            {String(index + 1).padStart(2, "0")}
+          </span>
           <span aria-hidden> / </span>
           <span className="sr-only"> of </span>
           {String(items.length).padStart(2, "0")}
@@ -162,7 +172,9 @@ export function Lightbox({
       </div>
 
       <div className="flex min-h-16 items-center justify-between gap-4 px-4 py-4 sm:px-6">
-        <p className="font-mono text-xs uppercase tracking-[0.2em] text-ash">{caption}</p>
+        <p className="font-mono text-xs uppercase tracking-[0.2em] text-ash">
+          {caption}
+        </p>
         {many && (
           <div className="flex gap-2 sm:hidden">
             <button

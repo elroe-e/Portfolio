@@ -52,7 +52,8 @@ export function Hero() {
 
         <div className="mt-6 grid gap-8 md:mt-8 md:grid-cols-[1fr_auto] md:items-end">
           <p className="max-w-xl animate-fade-up text-lg leading-relaxed text-bone/80 [animation-delay:650ms] md:text-xl">
-            Photographer <span className="font-serif italic text-ember">&amp;</span>{" "}
+            Photographer{" "}
+            <span className="font-serif italic text-ember">&amp;</span>{" "}
             full-stack developer. {site.tagline}
           </p>
 

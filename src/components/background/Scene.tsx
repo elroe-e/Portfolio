@@ -62,7 +62,12 @@ type Floater = {
   phone?: Placement;
 };
 
-const at = (section: SectionId, x: number, y: number, scale: number): Placement => ({
+const at = (
+  section: SectionId,
+  x: number,
+  y: number,
+  scale: number,
+): Placement => ({
   section,
   x,
   y,
@@ -100,7 +105,13 @@ const FLOATERS: Floater[] = [
     wide: at("top", 0.55, 0.24, 0.62),
     phone: at("top", 0.275, 0.165, 0.4),
   },
-  { shape: "code", material: "ember", z: -1, spin: 0, wide: at("top", 0.93, 0.16, 0.5) },
+  {
+    shape: "code",
+    material: "ember",
+    z: -1,
+    spin: 0,
+    wide: at("top", 0.93, 0.16, 0.5),
+  },
   {
     shape: "orb",
     material: "ember",
@@ -127,8 +138,20 @@ const FLOATERS: Floater[] = [
     wide: at("about", 0, 0.62, 0.95),
     phone: at("about", 0.84, 0.055, 0.38),
   },
-  { shape: "octa", material: "ember", z: 0.4, spin: 0.5, wide: at("about", 0.375, 0.2, 0.3) },
-  { shape: "gem", material: "chrome", z: -3, spin: 0.3, wide: at("about", 1, 0.9, 1.15) },
+  {
+    shape: "octa",
+    material: "ember",
+    z: 0.4,
+    spin: 0.5,
+    wide: at("about", 0.375, 0.2, 0.3),
+  },
+  {
+    shape: "gem",
+    material: "chrome",
+    z: -3,
+    spin: 0.3,
+    wide: at("about", 1, 0.9, 1.15),
+  },
 
   // Photography
   {
@@ -141,8 +164,20 @@ const FLOATERS: Floater[] = [
   },
 
   // Development
-  { shape: "cage", material: "wire", z: -7, spin: 0.12, wide: at("development", 0.3, -0.02, 2.2) },
-  { shape: "pill", material: "ember", z: -3.5, spin: 0.4, wide: at("development", 0.9, 0, 0.6) },
+  {
+    shape: "cage",
+    material: "wire",
+    z: -7,
+    spin: 0.12,
+    wide: at("development", 0.3, -0.02, 2.2),
+  },
+  {
+    shape: "pill",
+    material: "ember",
+    z: -3.5,
+    spin: 0.4,
+    wide: at("development", 0.9, 0, 0.6),
+  },
   {
     shape: "code",
     material: "ember",
@@ -151,7 +186,13 @@ const FLOATERS: Floater[] = [
     wide: at("development", 0.56, 0.24, 0.55),
     phone: at("development", 0.8, 0, 0.32),
   },
-  { shape: "gem", material: "satin", z: 0.5, spin: 0.5, wide: at("development", 0.99, 0.95, 0.5) },
+  {
+    shape: "gem",
+    material: "satin",
+    z: 0.5,
+    spin: 0.5,
+    wide: at("development", 0.99, 0.95, 0.5),
+  },
 
   // Next
   {
@@ -162,7 +203,13 @@ const FLOATERS: Floater[] = [
     wide: at("next", 0.56, 0.25, 0.8),
     phone: at("next", 0.82, 0, 0.4),
   },
-  { shape: "orb", material: "bone", z: -2, spin: 0, wide: at("next", 0.97, 0.08, 0.22) },
+  {
+    shape: "orb",
+    material: "bone",
+    z: -2,
+    spin: 0,
+    wide: at("next", 0.97, 0.08, 0.22),
+  },
 
   // Contact — the camera, the knot and the cage return to close the page
   {
@@ -189,7 +236,13 @@ const FLOATERS: Floater[] = [
     wide: at("contact", 0.73, 0.15, 0.5),
     phone: at("contact", 0.52, 0, 0.3),
   },
-  { shape: "orb", material: "ember", z: -1.5, spin: 0, wide: at("contact", 0.7, 0.52, 0.16) },
+  {
+    shape: "orb",
+    material: "ember",
+    z: -1.5,
+    spin: 0,
+    wide: at("contact", 0.7, 0.52, 0.16),
+  },
 
   // Footer
   {
@@ -200,7 +253,13 @@ const FLOATERS: Floater[] = [
     wide: at("footer", 0.05, 0.25, 0.42),
     phone: at("footer", 0.08, 0.03, 0.25),
   },
-  { shape: "ring", material: "satin", z: -2, spin: 0.3, wide: at("footer", 0.95, 0.3, 0.7) },
+  {
+    shape: "ring",
+    material: "satin",
+    z: -2,
+    spin: 0.3,
+    wide: at("footer", 0.95, 0.3, 0.7),
+  },
 ];
 
 type Input = {
@@ -228,7 +287,13 @@ function seeded(seed: number) {
 /* Materials and shapes                                                */
 /* ------------------------------------------------------------------ */
 
-function Surface({ name, flat = false }: { name: MaterialName; flat?: boolean }) {
+function Surface({
+  name,
+  flat = false,
+}: {
+  name: MaterialName;
+  flat?: boolean;
+}) {
   switch (name) {
     case "chrome":
       return (
@@ -270,7 +335,12 @@ function Surface({ name, flat = false }: { name: MaterialName; flat?: boolean })
       );
     case "wire":
       return (
-        <meshBasicMaterial color="#f3efe8" wireframe transparent opacity={0.14} />
+        <meshBasicMaterial
+          color="#f3efe8"
+          wireframe
+          transparent
+          opacity={0.14}
+        />
       );
   }
 }
@@ -278,17 +348,17 @@ function Surface({ name, flat = false }: { name: MaterialName; flat?: boolean })
 function Geometry({ shape }: { shape: SimpleShape }) {
   switch (shape) {
     case "knot":
-      return <torusKnotGeometry args={[0.7, 0.25, 220, 32]} />;
+      return <torusKnotGeometry args={[0.7, 0.25, 140, 20]} />;
     case "ring":
-      return <torusGeometry args={[0.8, 0.26, 40, 120]} />;
+      return <torusGeometry args={[0.8, 0.26, 24, 72]} />;
     case "gem":
       return <icosahedronGeometry args={[1, 0]} />;
     case "octa":
       return <octahedronGeometry args={[1, 0]} />;
     case "orb":
-      return <sphereGeometry args={[1, 48, 48]} />;
+      return <sphereGeometry args={[1, 32, 24]} />;
     case "pill":
-      return <capsuleGeometry args={[0.42, 1.1, 12, 32]} />;
+      return <capsuleGeometry args={[0.42, 1.1, 8, 24]} />;
     case "cage":
       return <icosahedronGeometry args={[1, 1]} />;
   }
@@ -296,22 +366,46 @@ function Geometry({ shape }: { shape: SimpleShape }) {
 
 /** A small stylised camera — a nod to the photography. */
 function CameraModel() {
-  const silver = <meshStandardMaterial color="#c4c4cc" metalness={1} roughness={0.3} />;
-  const leather = <meshStandardMaterial color="#111114" metalness={0.1} roughness={0.85} />;
+  const silver = (
+    <meshStandardMaterial color="#c4c4cc" metalness={1} roughness={0.3} />
+  );
+  const leather = (
+    <meshStandardMaterial color="#111114" metalness={0.1} roughness={0.85} />
+  );
 
   return (
     <group rotation={[0.12, -0.5, 0.06]}>
       {/* Body: silver top and base plates around a black grip */}
-      <RoundedBox args={[2, 0.74, 0.7]} radius={0.07} smoothness={4} position={[0, -0.13, 0]}>
+      <RoundedBox
+        args={[2, 0.74, 0.7]}
+        radius={0.07}
+        smoothness={4}
+        position={[0, -0.13, 0]}
+      >
         {leather}
       </RoundedBox>
-      <RoundedBox args={[2.03, 0.34, 0.73]} radius={0.09} smoothness={4} position={[0, 0.41, 0]}>
+      <RoundedBox
+        args={[2.03, 0.34, 0.73]}
+        radius={0.09}
+        smoothness={4}
+        position={[0, 0.41, 0]}
+      >
         {silver}
       </RoundedBox>
-      <RoundedBox args={[2.03, 0.12, 0.73]} radius={0.05} smoothness={4} position={[0, -0.55, 0]}>
+      <RoundedBox
+        args={[2.03, 0.12, 0.73]}
+        radius={0.05}
+        smoothness={4}
+        position={[0, -0.55, 0]}
+      >
         {silver}
       </RoundedBox>
-      <RoundedBox args={[0.66, 0.24, 0.56]} radius={0.08} smoothness={4} position={[0, 0.68, 0]}>
+      <RoundedBox
+        args={[0.66, 0.24, 0.56]}
+        radius={0.08}
+        smoothness={4}
+        position={[0, 0.68, 0]}
+      >
         {silver}
       </RoundedBox>
       {/* Viewfinder window, shutter button and dial */}
@@ -330,7 +424,11 @@ function CameraModel() {
       {/* Lens */}
       <mesh position={[0, -0.06, 0.58]} rotation={[Math.PI / 2, 0, 0]}>
         <cylinderGeometry args={[0.47, 0.52, 0.5, 64]} />
-        <meshStandardMaterial color="#1b1b20" metalness={0.9} roughness={0.32} />
+        <meshStandardMaterial
+          color="#1b1b20"
+          metalness={0.9}
+          roughness={0.32}
+        />
       </mesh>
       <mesh position={[0, -0.06, 0.84]}>
         <torusGeometry args={[0.43, 0.045, 20, 64]} />
@@ -351,7 +449,13 @@ function CodeGlyph({ material }: { material: MaterialName }) {
   const angle = THREE.MathUtils.degToRad(55);
   const offset = (length / 2) * Math.cos(angle);
 
-  const bar = (key: string, x: number, y: number, rotation: number, size = length) => (
+  const bar = (
+    key: string,
+    x: number,
+    y: number,
+    rotation: number,
+    size = length,
+  ) => (
     <mesh key={key} position={[x, y, 0]} rotation={[0, 0, rotation]}>
       <capsuleGeometry args={[radius, size, 8, 20]} />
       <Surface name={material} />
@@ -437,7 +541,8 @@ const DUST_TRAVEL_PER_SCREEN = 3.2;
 /** Keeps a value inside the repeating track so the dust loops forever. */
 function wrap(value: number) {
   return (
-    ((((value + DUST_TRACK / 2) % DUST_TRACK) + DUST_TRACK) % DUST_TRACK) - DUST_TRACK / 2
+    ((((value + DUST_TRACK / 2) % DUST_TRACK) + DUST_TRACK) % DUST_TRACK) -
+    DUST_TRACK / 2
   );
 }
 
@@ -535,7 +640,9 @@ function usePageInput() {
       for (const id of SECTION_IDS) {
         const element = document.getElementById(id);
         if (!element) continue;
-        boxes.current[id] = { top: element.getBoundingClientRect().top + window.scrollY };
+        boxes.current[id] = {
+          top: element.getBoundingClientRect().top + window.scrollY,
+        };
       }
       invalidate();
     };
@@ -608,7 +715,8 @@ function Field({ still }: { still: boolean }) {
 
       // Distance from the middle of the screen, in pixels.
       const parallax = still ? 1 : 1 + floater.z * PARALLAX_PER_UNIT_OF_DEPTH;
-      const fromCentre = (box.top + place.y * screen - scrolled - screen / 2) * parallax;
+      const fromCentre =
+        (box.top + place.y * screen - scrolled - screen / 2) * parallax;
 
       // Shapes well outside the screen are skipped entirely.
       node.visible = Math.abs(fromCentre) < screen * 1.1;
@@ -618,14 +726,18 @@ function Field({ still }: { still: boolean }) {
       const halfHeight = (CAMERA_Z - floater.z) * HALF_TAN;
 
       node.position.set(
-        (place.x * 2 - 1) * halfHeight * aspect + Math.cos(time * 0.33 + phase) * 0.12,
-        (-fromCentre / (screen / 2)) * halfHeight + Math.sin(time * 0.5 + phase) * 0.2,
+        (place.x * 2 - 1) * halfHeight * aspect +
+          Math.cos(time * 0.33 + phase) * 0.12,
+        (-fromCentre / (screen / 2)) * halfHeight +
+          Math.sin(time * 0.5 + phase) * 0.2,
         floater.z,
       );
 
       if (floater.spin > 0) {
         node.rotation.set(
-          phase + time * floater.spin * 0.42 + screens.current * floater.spin * 1.4,
+          phase +
+            time * floater.spin * 0.42 +
+            screens.current * floater.spin * 1.4,
           phase * 0.7 + time * floater.spin * 0.55,
           Math.sin(time * 0.3 + phase) * 0.2,
         );
@@ -641,8 +753,18 @@ function Field({ still }: { still: boolean }) {
 
     // The whole field leans a little towards the pointer for a sense of depth.
     if (rig.current && !still) {
-      rig.current.rotation.y = THREE.MathUtils.damp(rig.current.rotation.y, x * 0.1, 3, dt);
-      rig.current.rotation.x = THREE.MathUtils.damp(rig.current.rotation.x, y * 0.06, 3, dt);
+      rig.current.rotation.y = THREE.MathUtils.damp(
+        rig.current.rotation.y,
+        x * 0.1,
+        3,
+        dt,
+      );
+      rig.current.rotation.x = THREE.MathUtils.damp(
+        rig.current.rotation.x,
+        y * 0.06,
+        3,
+        dt,
+      );
     }
   });
 
@@ -688,10 +810,35 @@ function usePrefersReducedMotion() {
   return reduced;
 }
 
+/**
+ * True while the scene cannot be seen: the browser tab is in the background,
+ * or the menu or photo viewer covers the page. Rendering stops meanwhile.
+ */
+function useScenePaused() {
+  const [paused, setPaused] = useState(false);
+
+  useEffect(() => {
+    const root = document.documentElement;
+    const update = () =>
+      setPaused(document.hidden || root.classList.contains("is-locked"));
+    const observer = new MutationObserver(update);
+    observer.observe(root, { attributes: true, attributeFilter: ["class"] });
+    document.addEventListener("visibilitychange", update);
+    update();
+    return () => {
+      observer.disconnect();
+      document.removeEventListener("visibilitychange", update);
+    };
+  }, []);
+
+  return paused;
+}
+
 export default function Scene({ onReady }: { onReady?: () => void }) {
   const still = usePrefersReducedMotion();
   const [maxDpr, setMaxDpr] = useState(1.5);
   const [settled, setSettled] = useState(false);
+  const paused = useScenePaused();
 
   // With reduced motion nothing animates on its own: once the scene has been
   // drawn, the render loop stops and only runs again when the page scrolls.
@@ -709,7 +856,7 @@ export default function Scene({ onReady }: { onReady?: () => void }) {
       dpr={[1, maxDpr]}
       camera={{ position: [0, 0, CAMERA_Z], fov: FOV, near: 0.1, far: 60 }}
       gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
-      frameloop={still && settled ? "demand" : "always"}
+      frameloop={paused ? "never" : still && settled ? "demand" : "always"}
       onCreated={onReady}
       style={{ pointerEvents: "none" }}
     >
@@ -719,10 +866,14 @@ export default function Scene({ onReady }: { onReady?: () => void }) {
       <fog attach="fog" args={["#08080a", 9, 25]} />
       <ambientLight intensity={0.35} />
       <directionalLight position={[5, 6, 6]} intensity={1.8} color="#fff0de" />
-      <directionalLight position={[-6, -3, 2]} intensity={1.1} color="#ff6a3d" />
+      <directionalLight
+        position={[-6, -3, 2]}
+        intensity={1.1}
+        color="#ff6a3d"
+      />
 
       {/* A small photo studio that the metal surfaces reflect. */}
-      <Environment resolution={256}>
+      <Environment resolution={128}>
         <color attach="background" args={["#0e0e12"]} />
         {/* Large softbox overhead */}
         <Lightformer

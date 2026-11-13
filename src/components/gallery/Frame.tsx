@@ -53,7 +53,9 @@ export function Frame({
     >
       <span
         className={`absolute font-mono uppercase tracking-[0.22em] text-bone/55 ${
-          large ? "left-6 top-6 text-xs" : "left-3 top-3 text-[9px] sm:left-4 sm:top-4 sm:text-[10px]"
+          large
+            ? "left-6 top-6 text-xs"
+            : "left-3 top-3 text-[9px] sm:left-4 sm:top-4 sm:text-[10px]"
         }`}
       >
         {item.category}
@@ -75,7 +77,9 @@ export function Frame({
       <span
         aria-hidden
         className={`absolute font-serif italic leading-none text-bone/15 ${
-          large ? "bottom-4 right-6 text-9xl" : "bottom-2 right-3 text-5xl sm:right-4 sm:text-7xl"
+          large
+            ? "bottom-4 right-6 text-9xl"
+            : "bottom-2 right-3 text-5xl sm:right-4 sm:text-7xl"
         }`}
       >
         {number}

@@ -9,7 +9,10 @@ import { useEffect, useRef } from "react";
  *
  * `backgroundIds` must be a stable array (define it outside the component).
  */
-export function useOverlay(onClose: () => void, backgroundIds: readonly string[]) {
+export function useOverlay(
+  onClose: () => void,
+  backgroundIds: readonly string[],
+) {
   const close = useRef(onClose);
 
   useEffect(() => {
@@ -18,7 +21,9 @@ export function useOverlay(onClose: () => void, backgroundIds: readonly string[]
 
   useEffect(() => {
     const returnTo =
-      document.activeElement instanceof HTMLElement ? document.activeElement : null;
+      document.activeElement instanceof HTMLElement
+        ? document.activeElement
+        : null;
     const background = backgroundIds
       .map((id) => document.getElementById(id))
       .filter((element) => element !== null);

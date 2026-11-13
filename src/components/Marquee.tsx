@@ -3,7 +3,10 @@ import { Spark } from "./ui/icons";
 
 function Row({ hidden = false }: { hidden?: boolean }) {
   return (
-    <ul aria-hidden={hidden || undefined} className="flex shrink-0 items-center">
+    <ul
+      aria-hidden={hidden || undefined}
+      className="flex shrink-0 items-center"
+    >
       {marqueeWords.map((word, index) => (
         <li key={word} className="flex items-center">
           <span
@@ -26,7 +29,7 @@ function Row({ hidden = false }: { hidden?: boolean }) {
 export function Marquee() {
   return (
     <div className="relative overflow-hidden border-y border-line bg-ink/60 py-6 md:py-9">
-      <div className="flex w-max animate-marquee">
+      <div className="flex w-max animate-marquee will-change-transform">
         <Row />
         <Row hidden />
       </div>

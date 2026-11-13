@@ -5,7 +5,10 @@ import { SectionHeading } from "./ui/SectionHeading";
 /** A phone wireframe with a softly pulsing layout. */
 function AppsVisual() {
   return (
-    <div aria-hidden className="relative flex h-56 items-end justify-center overflow-hidden">
+    <div
+      aria-hidden
+      className="relative flex h-56 items-end justify-center overflow-hidden"
+    >
       <div className="absolute inset-0 opacity-50 [background-image:linear-gradient(var(--line)_1px,transparent_1px),linear-gradient(90deg,var(--line)_1px,transparent_1px)] [background-size:28px_28px] [mask-image:radial-gradient(70%_75%_at_50%_60%,black,transparent)]" />
 
       <div className="absolute bottom-0 left-1/2 h-44 w-28 -translate-x-[125%] translate-y-10 -rotate-12 rounded-t-3xl border border-b-0 border-bone/15 bg-ink/80" />
@@ -43,7 +46,11 @@ function FilmVisual() {
   const frames = (key: string) => (
     <div key={key} className="flex shrink-0 gap-2 pr-2">
       {FILM_TONES.map((tone) => (
-        <div key={tone} className="h-24 w-40 shrink-0 rounded-sm" style={{ background: tone }} />
+        <div
+          key={tone}
+          className="h-24 w-40 shrink-0 rounded-sm"
+          style={{ background: tone }}
+        />
       ))}
     </div>
   );
@@ -79,8 +86,14 @@ export function Horizon() {
   return (
     <section id="next" className="px-5 py-20 sm:px-8 md:py-28 lg:px-12">
       <div className="mx-auto max-w-[1400px]">
-        <SectionHeading index="04" label="Next" plain="On the" accent="horizon.">
-          Two things I&apos;m working towards. It&apos;s too early to show them — but they&apos;re coming.
+        <SectionHeading
+          index="04"
+          label="Next"
+          plain="On the"
+          accent="horizon."
+        >
+          Two things I&apos;m working towards. It&apos;s too early to show them
+          — but they&apos;re coming.
         </SectionHeading>
 
         <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
@@ -108,7 +121,9 @@ export function Horizon() {
                     <h3 className="text-3xl font-medium tracking-[-0.03em] md:text-4xl">
                       {item.title}
                     </h3>
-                    <p className="mt-3 max-w-md leading-relaxed text-ash">{item.text}</p>
+                    <p className="mt-3 max-w-md leading-relaxed text-ash">
+                      {item.text}
+                    </p>
                   </div>
                 </article>
               </Reveal>

@@ -22,7 +22,10 @@ function CodeIcon() {
   );
 }
 
-const serviceIcons = [<CameraIcon key="camera" className="size-5" />, <CodeIcon key="code" />];
+const serviceIcons = [
+  <CameraIcon key="camera" className="size-5" />,
+  <CodeIcon key="code" />,
+];
 
 export function About() {
   return (
@@ -65,7 +68,9 @@ export function About() {
                     </span>
                     {service.title}
                   </dt>
-                  <dd className="mt-4 leading-relaxed text-ash">{service.text}</dd>
+                  <dd className="mt-4 leading-relaxed text-ash">
+                    {service.text}
+                  </dd>
                 </Reveal>
               </div>
             ))}
