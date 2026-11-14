@@ -1,0 +1,21 @@
+[
+  {
+    "slug": "siaab-mobile",
+    "title": "Siaab Mobile",
+    "url": "https://www.siaabmobile.com",
+    "displayUrl": "siaabmobile.com",
+    "stack": [],
+    "en": {
+      "kind": "Website",
+      "role": "Development",
+      "status": "Live",
+      "summary": "The first website I built and shipped. It's live at siaabmobile.com — and it's where this side of my work begins."
+    },
+    "am": {
+      "kind": "ድረ-ገጽ",
+      "role": "ግንባታ",
+      "status": "በሥራ ላይ",
+      "summary": "የገነባሁት እና ለሕዝብ ያቀረብኩት የመጀመሪያ ድረ-ገጽ። በ siaabmobile.com ላይ ይገኛል — የዚህ ሙያዬ መነሻም እሱ ነው።"
+    }
+  }
+]

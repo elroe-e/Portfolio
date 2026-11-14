@@ -5,10 +5,22 @@ import {
   Lightformer,
   PerformanceMonitor,
   RoundedBox,
+  useTexture,
 } from "@react-three/drei";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { type RefObject, useEffect, useMemo, useRef, useState } from "react";
+import {
+  createContext,
+  type RefObject,
+  Suspense,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import * as THREE from "three";
+import type { HeroPhoto } from "@/content/media";
+import { type Theme, useTheme } from "../ThemeToggle";
 
 /* ------------------------------------------------------------------ */
 /* Scene settings                                                      */
@@ -37,7 +49,7 @@ type SectionId = (typeof SECTION_IDS)[number];
 
 type MaterialName = "chrome" | "satin" | "ember" | "bone" | "wire";
 type SimpleShape = "knot" | "ring" | "gem" | "octa" | "orb" | "pill" | "cage";
-type ShapeName = SimpleShape | "camera" | "code" | "brackets";
+type ShapeName = SimpleShape | "camera" | "code" | "brackets" | "photo";
 
 type Placement = {
   /** The section this shape travels with. */
@@ -60,6 +72,10 @@ type Floater = {
   wide: Placement;
   /** Where it sits on phones and portrait tablets. Left out = hidden there. */
   phone?: Placement;
+  /** For "photo" shapes: which hero photo (0, 1 or 2) it shows. */
+  slot?: number;
+  /** Stands in for the photos until real ones are added. */
+  untilPhotos?: boolean;
 };
 
 const at = (
@@ -87,7 +103,7 @@ const FLOATERS: Floater[] = [
     z: 0.4,
     spin: 0.35,
     wide: at("top", 0.85, 0.46, 1.25),
-    phone: at("top", 0.81, 0.225, 0.72),
+    phone: at("top", 0.8, 0.2, 0.66),
   },
   {
     shape: "cage",
@@ -104,6 +120,7 @@ const FLOATERS: Floater[] = [
     spin: 0,
     wide: at("top", 0.55, 0.24, 0.62),
     phone: at("top", 0.275, 0.165, 0.4),
+    untilPhotos: true,
   },
   {
     shape: "code",
@@ -111,6 +128,33 @@ const FLOATERS: Floater[] = [
     z: -1,
     spin: 0,
     wide: at("top", 0.93, 0.16, 0.5),
+    untilPhotos: true,
+  },
+  // Your photos, as floating prints (only when there are real photos)
+  {
+    shape: "photo",
+    material: "bone",
+    z: 0.6,
+    spin: 0,
+    slot: 0,
+    wide: at("top", 0.56, 0.25, 1),
+    phone: at("top", 0.27, 0.165, 0.62),
+  },
+  {
+    shape: "photo",
+    material: "bone",
+    z: -1.2,
+    spin: 0,
+    slot: 1,
+    wide: at("top", 0.92, 0.17, 0.78),
+  },
+  {
+    shape: "photo",
+    material: "bone",
+    z: -2.6,
+    spin: 0,
+    slot: 2,
+    wide: at("top", 0.43, 0.11, 0.6),
   },
   {
     shape: "orb",
@@ -287,6 +331,9 @@ function seeded(seed: number) {
 /* Materials and shapes                                                */
 /* ------------------------------------------------------------------ */
 
+/** The active colour theme, shared with everything inside the canvas. */
+const ThemeContext = createContext<Theme>("dark");
+
 function Surface({
   name,
   flat = false,
@@ -334,15 +381,21 @@ function Surface({
         />
       );
     case "wire":
-      return (
-        <meshBasicMaterial
-          color="#f3efe8"
-          wireframe
-          transparent
-          opacity={0.14}
-        />
-      );
+      return <WireMaterial />;
   }
+}
+
+/** Faint wireframe: light lines on the dark theme, dark lines on the light one. */
+function WireMaterial() {
+  const theme = useContext(ThemeContext);
+  return (
+    <meshBasicMaterial
+      color={theme === "light" ? "#141416" : "#f3efe8"}
+      wireframe
+      transparent
+      opacity={theme === "light" ? 0.12 : 0.14}
+    />
+  );
 }
 
 function Geometry({ shape }: { shape: SimpleShape }) {
@@ -508,8 +561,61 @@ function Brackets({ material }: { material: MaterialName }) {
   );
 }
 
-function FloaterMesh({ floater }: { floater: Floater }) {
+/** Height of a floating photo print, in world units, before its scale. */
+const PRINT_HEIGHT = 1.6;
+const PRINT_MAX_WIDTH = 2.4;
+const PRINT_BORDER = 0.07;
+
+/** One of your photos as a print with a white border. */
+function PhotoCard({ photo }: { photo: HeroPhoto }) {
+  // A resized copy from the site's image optimiser, not the full-size file.
+  const texture = useTexture(
+    `/_next/image?url=${encodeURIComponent(photo.src)}&w=828&q=75`,
+    (loaded) => {
+      loaded.colorSpace = THREE.SRGBColorSpace;
+      loaded.anisotropy = 4;
+    },
+  );
+
+  let height = PRINT_HEIGHT;
+  let width = (height * photo.width) / photo.height;
+  if (width > PRINT_MAX_WIDTH) {
+    height *= PRINT_MAX_WIDTH / width;
+    width = PRINT_MAX_WIDTH;
+  }
+
+  return (
+    <group rotation={[0.04, -0.22, 0.03]}>
+      <mesh position={[0, 0, -0.012]}>
+        <planeGeometry
+          args={[width + PRINT_BORDER * 2, height + PRINT_BORDER * 2]}
+        />
+        <meshStandardMaterial color="#f3efe8" roughness={0.75} metalness={0} />
+      </mesh>
+      <mesh>
+        <planeGeometry args={[width, height]} />
+        <meshBasicMaterial map={texture} toneMapped={false} />
+      </mesh>
+    </group>
+  );
+}
+
+function FloaterMesh({
+  floater,
+  photos,
+}: {
+  floater: Floater;
+  photos: HeroPhoto[];
+}) {
   switch (floater.shape) {
+    case "photo": {
+      const photo = photos[floater.slot ?? 0];
+      return photo ? (
+        <Suspense fallback={null}>
+          <PhotoCard photo={photo} />
+        </Suspense>
+      ) : null;
+    }
     case "camera":
       return <CameraModel />;
     case "code":
@@ -557,6 +663,7 @@ function Dust({
   count?: number;
 }) {
   const points = useRef<THREE.Points>(null);
+  const theme = useContext(ThemeContext);
 
   const { home, positions, sprite } = useMemo(() => {
     const random = seeded(11);
@@ -611,7 +718,7 @@ function Dust({
       </bufferGeometry>
       <pointsMaterial
         map={sprite}
-        color="#ffd9c4"
+        color={theme === "light" ? "#7a4a32" : "#ffd9c4"}
         size={0.085}
         sizeAttenuation
         transparent
@@ -677,7 +784,17 @@ function usePageInput() {
 /* The floating field                                                  */
 /* ------------------------------------------------------------------ */
 
-function Field({ still }: { still: boolean }) {
+function Field({ still, photos }: { still: boolean; photos: HeroPhoto[] }) {
+  // With real photos, they take the camera's and code sign's places in the hero.
+  const floaters = useMemo(
+    () =>
+      FLOATERS.filter((floater) =>
+        floater.shape === "photo"
+          ? (floater.slot ?? 0) < photos.length
+          : !(floater.untilPhotos && photos.length > 0),
+      ),
+    [photos.length],
+  );
   const { input, boxes } = usePageInput();
   const rig = useRef<THREE.Group>(null);
   const nodes = useRef<Array<THREE.Group | null>>([]);
@@ -702,7 +819,7 @@ function Field({ still }: { still: boolean }) {
     scroll.current = scrolled;
     screens.current = scrolled / screen;
 
-    FLOATERS.forEach((floater, index) => {
+    floaters.forEach((floater, index) => {
       const node = nodes.current[index];
       if (!node) return;
 
@@ -770,7 +887,7 @@ function Field({ still }: { still: boolean }) {
 
   return (
     <group ref={rig}>
-      {FLOATERS.map((floater, index) => {
+      {floaters.map((floater, index) => {
         const place = phone ? floater.phone : floater.wide;
         if (!place) return null;
         return (
@@ -782,7 +899,7 @@ function Field({ still }: { still: boolean }) {
             scale={place.scale}
             visible={false}
           >
-            <FloaterMesh floater={floater} />
+            <FloaterMesh floater={floater} photos={photos} />
           </group>
         );
       })}
@@ -834,7 +951,14 @@ function useScenePaused() {
   return paused;
 }
 
-export default function Scene({ onReady }: { onReady?: () => void }) {
+export default function Scene({
+  photos,
+  onReady,
+}: {
+  photos: HeroPhoto[];
+  onReady?: () => void;
+}) {
+  const theme = useTheme();
   const still = usePrefersReducedMotion();
   const [maxDpr, setMaxDpr] = useState(1.5);
   const [settled, setSettled] = useState(false);
@@ -863,7 +987,10 @@ export default function Scene({ onReady }: { onReady?: () => void }) {
       {/* Drop to a lower resolution if the device struggles to keep up. */}
       <PerformanceMonitor onDecline={() => setMaxDpr(1)} />
 
-      <fog attach="fog" args={["#08080a", 9, 25]} />
+      <fog
+        attach="fog"
+        args={[theme === "light" ? "#f3efe7" : "#08080a", 9, 25]}
+      />
       <ambientLight intensity={0.35} />
       <directionalLight position={[5, 6, 6]} intensity={1.8} color="#fff0de" />
       <directionalLight
@@ -928,7 +1055,9 @@ export default function Scene({ onReady }: { onReady?: () => void }) {
         />
       </Environment>
 
-      <Field still={still} />
+      <ThemeContext value={theme}>
+        <Field still={still} photos={photos} />
+      </ThemeContext>
     </Canvas>
   );
 }

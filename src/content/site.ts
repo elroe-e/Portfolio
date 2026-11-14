@@ -1,85 +1,85 @@
 /**
- * Everything written on the site lives in this folder.
- * Edit the text here and the pages update — no need to touch the components.
+ * Everything written on the site lives in this folder:
+ *
+ *   settings.json   name, availability badge, hero photos and contact details
+ *   copy.en.json    all English text
+ *   copy.am.json    all Amharic text (same keys as the English file)
+ *   projects.json   websites and apps in the Development section
+ *
+ * Edit them by hand, or from the admin page at /admin.
  */
 
-export const site = {
-  name: "Elroe Fikremariam",
-  firstName: "Elroe",
-  lastName: "Fikremariam",
-  roles: ["Photographer", "Full-Stack Developer"],
-  tagline: "I make images and build the websites they live on.",
-  description:
-    "Elroe Fikremariam is a photographer and full-stack web developer. See selected photography, websites, and what is coming next.",
+import am from "./copy.am.json";
+import en from "./copy.en.json";
+import projectsFile from "./projects.json";
+import settingsFile from "./settings.json";
 
-  /** Shows the green "available" badge in the hero. Set to false when fully booked. */
-  available: true,
+export type Copy = typeof en;
+export type Lang = "en" | "am";
 
+export const languages: Record<
+  Lang,
+  { label: string; short: string; path: string; locale: string }
+> = {
+  en: { label: "English", short: "EN", path: "/", locale: "en_US" },
+  am: { label: "አማርኛ", short: "አማ", path: "/am", locale: "am_ET" },
+};
+
+const dictionaries: Record<Lang, Copy> = { en, am: am as Copy };
+
+export function getCopy(lang: Lang): Copy {
+  return dictionaries[lang];
+}
+
+export type ContactLink = { value: string; href: string };
+
+export type Settings = {
+  name: { first: string; last: string };
+  available: boolean;
+  /** Gallery photos (their /photos/... paths) floating in the hero. Up to 3. */
+  heroPhotos: string[];
   contact: {
-    telegram: {
-      label: "Telegram",
-      value: "@ELR0E",
-      href: "https://t.me/ELR0E",
-    },
-    instagram: {
-      label: "Instagram",
-      value: "@elroe_e",
-      href: "https://www.instagram.com/elroe_e/",
-    },
-    phone: {
-      label: "Phone",
-      value: "+251 99 426 1461",
-      href: "tel:+251994261461",
-    },
-  },
-} as const;
+    telegram: ContactLink;
+    instagram: ContactLink;
+    phone: ContactLink;
+  };
+};
 
-export const navLinks = [
-  { id: "about", label: "About" },
-  { id: "photography", label: "Photography" },
-  { id: "development", label: "Development" },
-  { id: "next", label: "Next" },
-  { id: "contact", label: "Contact" },
+export const settings = settingsFile as Settings;
+
+type ProjectText = {
+  kind: string;
+  role: string;
+  status: string;
+  summary: string;
+};
+
+export type Project = {
+  /** Used for the screenshot file name: public/projects/<slug>.jpg */
+  slug: string;
+  title: string;
+  url: string;
+  displayUrl: string;
+  /** Technologies used, e.g. ["Next.js", "PostgreSQL"]. Hidden when empty. */
+  stack: string[];
+} & Record<Lang, ProjectText>;
+
+export const projects = projectsFile as Project[];
+
+/** Page sections in order. The ids are also the #links in the navigation. */
+export const sectionIds = [
+  "about",
+  "photography",
+  "development",
+  "next",
+  "contact",
 ] as const;
 
-/** The moving band of words under the hero. */
-export const marqueeWords = [
-  "Photography",
-  "Web development",
-  "Visual storytelling",
-  "Full-stack builds",
-] as const;
-
-export const about = {
-  heading: { plain: "Two crafts,", accent: "one eye." },
-  paragraphs: [
-    "I'm Elroe — a photographer and full-stack web developer. I care about the same things in both: light, composition, and the small details most people only feel.",
-    "With a camera, that means patient, honest images. With code, it means websites that load fast, read clearly and work on every screen — built end to end.",
-  ],
-  services: [
-    {
-      title: "Photography",
-      text: "Images made with patience and edited with restraint, delivered ready to print or post.",
-    },
-    {
-      title: "Web development",
-      text: "Full-stack websites, from the first sketch to a live site that is fast, responsive and easy to manage.",
-    },
-  ],
-} as const;
-
-/** "What's next" — things in progress that are too early to show. */
-export const upcoming = [
-  {
-    id: "apps",
-    title: "Mobile apps",
-    status: "In progress",
-    text: "I've started building apps. The first releases will land here once they're ready.",
-  },
-  {
-    id: "cinematography",
-    title: "Cinematography",
-    status: "Early days",
-    text: "Moving from stills to motion. Reels and short films will follow when they're worth your time.",
-  },
-] as const;
+/** Language-independent facts for page titles and link previews. */
+export const site = {
+  name: `${settings.name.first} ${settings.name.last}`,
+  firstName: settings.name.first,
+  lastName: settings.name.last,
+  roles: ["Photographer", "Full-Stack Developer"],
+  description: en.meta.description,
+};

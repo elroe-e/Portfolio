@@ -2,6 +2,7 @@
 
 import { motion, useScroll, useTransform } from "motion/react";
 import dynamic from "next/dynamic";
+import type { HeroPhoto } from "@/content/media";
 import { Component, type ReactNode, useEffect, useState } from "react";
 
 // The 3D scene is loaded separately, after the page itself, so it never slows
@@ -24,7 +25,7 @@ class SceneBoundary extends Component<
   }
 }
 
-export function Background() {
+export function Background({ photos }: { photos: HeroPhoto[] }) {
   const [mounted, setMounted] = useState(false);
   const [ready, setReady] = useState(false);
 
@@ -61,13 +62,13 @@ export function Background() {
         >
           {mounted && (
             <SceneBoundary>
-              <Scene onReady={() => setReady(true)} />
+              <Scene photos={photos} onReady={() => setReady(true)} />
             </SceneBoundary>
           )}
         </div>
       </motion.div>
 
-      <div className="grain absolute inset-0 opacity-[0.055]" />
+      <div className="grain absolute inset-0 opacity-(--grain)" />
       <div className="vignette absolute inset-0" />
     </div>
   );

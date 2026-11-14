@@ -1,6 +1,12 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
-import { site } from "@/content/site";
+import {
+  Geist,
+  Geist_Mono,
+  Instrument_Serif,
+  Noto_Sans_Ethiopic,
+  Noto_Serif_Ethiopic,
+} from "next/font/google";
+import { getCopy, site } from "@/content/site";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -20,7 +26,22 @@ const instrumentSerif = Instrument_Serif({
   style: ["normal", "italic"],
 });
 
-const title = `${site.name} — ${site.roles.join(" & ")}`;
+// Ge'ez script for the Amharic page. Browsers only download these when
+// Ethiopic characters are on screen, so the English page doesn't pay for them.
+const ethiopicSans = Noto_Sans_Ethiopic({
+  variable: "--font-ethiopic-sans",
+  subsets: ["ethiopic"],
+  preload: false,
+});
+
+const ethiopicSerif = Noto_Serif_Ethiopic({
+  variable: "--font-ethiopic-serif",
+  subsets: ["ethiopic"],
+  preload: false,
+});
+
+const t = getCopy("en");
+const title = `${site.name} — ${t.meta.title}`;
 
 // Set NEXT_PUBLIC_SITE_URL (e.g. https://elroe.com) once the site has a domain,
 // so links shared on social media point at the right address.
@@ -32,7 +53,7 @@ export const metadata: Metadata = {
     default: title,
     template: `%s — ${site.name}`,
   },
-  description: site.description,
+  description: t.meta.description,
   applicationName: site.name,
   authors: [{ name: site.name }],
   creator: site.name,
@@ -46,37 +67,41 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     title,
-    description: site.description,
+    description: t.meta.description,
     siteName: site.name,
     locale: "en_US",
   },
   twitter: {
     card: "summary_large_image",
     title,
-    description: site.description,
+    description: t.meta.description,
   },
 };
 
 export const viewport: Viewport = {
   themeColor: "#08080a",
-  colorScheme: "dark",
+  colorScheme: "dark light",
 };
+
+/**
+ * Runs before the first paint (see the Next.js guide "Preventing flash before
+ * hydration"): applies the saved theme, and shortens the intro when the visitor
+ * arrives through a page transition.
+ */
+const beforePaint = `(function(){var d=document.documentElement;try{var t=localStorage.getItem("theme");if(t==="light"||t==="dark")d.setAttribute("data-theme",t)}catch(e){}try{if(sessionStorage.getItem("shutter")){sessionStorage.removeItem("shutter");d.classList.add("arriving")}}catch(e){}})()`;
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} ${instrumentSerif.variable}`}
+      data-theme="dark"
+      suppressHydrationWarning
+      className={`${geistSans.variable} ${geistMono.variable} ${instrumentSerif.variable} ${ethiopicSans.variable} ${ethiopicSerif.variable}`}
     >
-      <body className="min-h-svh">
-        <a
-          href="#main"
-          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-bone focus:px-5 focus:py-3 focus:text-sm focus:font-medium focus:text-ink"
-        >
-          Skip to content
-        </a>
-        {children}
-      </body>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: beforePaint }} />
+      </head>
+      <body className="min-h-svh">{children}</body>
     </html>
   );
 }

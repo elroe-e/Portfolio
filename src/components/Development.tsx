@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { type MediaAsset, projectScreenshot } from "@/content/media";
-import { type Project, projects } from "@/content/projects";
+import { type Copy, type Lang, type Project, projects } from "@/content/site";
 import { ButtonLink } from "./ui/Button";
 import { Plus } from "./ui/icons";
 import { Reveal } from "./ui/Reveal";
@@ -8,10 +8,17 @@ import { SectionHeading } from "./ui/SectionHeading";
 import { Tilt } from "./ui/Tilt";
 
 /** Shown inside the browser frame until a real screenshot is added. */
-function PreviewPlaceholder({ project }: { project: Project }) {
+function PreviewPlaceholder({
+  project,
+  note,
+}: {
+  project: Project;
+  note: string;
+}) {
   return (
     <div
-      className="absolute inset-0 flex flex-col p-[6%]"
+      data-theme="dark"
+      className="absolute inset-0 flex flex-col p-[6%] text-bone"
       style={{
         background:
           "radial-gradient(70% 80% at 85% 10%, rgb(255 106 61 / 0.3), transparent 60%), radial-gradient(60% 70% at 0% 100%, rgb(88 116 255 / 0.2), transparent 60%), linear-gradient(160deg, #1b1b20, #0c0c0f)",
@@ -20,9 +27,9 @@ function PreviewPlaceholder({ project }: { project: Project }) {
       <div className="flex items-center justify-between">
         <span className="size-4 rounded-full bg-ember sm:size-5" />
         <span className="flex gap-2 sm:gap-3">
-          <span className="h-1.5 w-8 rounded-full bg-white/20 sm:w-12" />
-          <span className="h-1.5 w-8 rounded-full bg-white/20 sm:w-12" />
-          <span className="h-1.5 w-8 rounded-full bg-white/20 sm:w-12" />
+          <span className="h-1.5 w-8 rounded-full bg-bone/20 sm:w-12" />
+          <span className="h-1.5 w-8 rounded-full bg-bone/20 sm:w-12" />
+          <span className="h-1.5 w-8 rounded-full bg-bone/20 sm:w-12" />
         </span>
       </div>
 
@@ -31,13 +38,13 @@ function PreviewPlaceholder({ project }: { project: Project }) {
           {project.title}
         </p>
         <div className="mt-[4%] space-y-2">
-          <span className="block h-1.5 w-2/5 animate-shimmer rounded-full bg-white/25" />
-          <span className="block h-1.5 w-1/4 animate-shimmer rounded-full bg-white/15 [animation-delay:400ms]" />
+          <span className="block h-1.5 w-2/5 animate-shimmer rounded-full bg-bone/25" />
+          <span className="block h-1.5 w-1/4 animate-shimmer rounded-full bg-bone/15 [animation-delay:400ms]" />
         </div>
       </div>
 
       <p className="font-mono text-[9px] uppercase tracking-[0.22em] text-bone/50 sm:text-[10px]">
-        Preview — screenshot coming soon
+        {note}
       </p>
     </div>
   );
@@ -46,17 +53,19 @@ function PreviewPlaceholder({ project }: { project: Project }) {
 function BrowserFrame({
   project,
   screenshot,
+  t,
 }: {
   project: Project;
   screenshot: MediaAsset | null;
+  t: Copy["development"];
 }) {
   return (
-    <div className="overflow-hidden rounded-2xl border border-line bg-coal shadow-2xl shadow-black/60">
+    <div className="overflow-hidden rounded-2xl border border-line bg-coal shadow-2xl shadow-black/40">
       <div className="flex items-center gap-2 border-b border-line px-4 py-3">
-        <span className="size-2.5 rounded-full bg-white/15" />
-        <span className="size-2.5 rounded-full bg-white/15" />
-        <span className="size-2.5 rounded-full bg-white/15" />
-        <span className="ml-3 flex-1 truncate rounded-full bg-white/5 px-4 py-1 text-center font-mono text-[11px] text-ash">
+        <span className="size-2.5 rounded-full bg-bone/15" />
+        <span className="size-2.5 rounded-full bg-bone/15" />
+        <span className="size-2.5 rounded-full bg-bone/15" />
+        <span className="ml-3 flex-1 truncate rounded-full bg-bone/5 px-4 py-1 text-center font-mono text-[11px] text-ash">
           {project.displayUrl}
         </span>
         <span className="w-10" />
@@ -65,7 +74,7 @@ function BrowserFrame({
         {screenshot ? (
           <Image
             src={screenshot.src}
-            alt={`Screenshot of the ${project.title} website`}
+            alt={`${t.screenshotAlt}: ${project.title}`}
             fill
             sizes="(min-width: 1024px) 58vw, 100vw"
             placeholder="blur"
@@ -73,14 +82,25 @@ function BrowserFrame({
             className="object-cover object-top"
           />
         ) : (
-          <PreviewPlaceholder project={project} />
+          <PreviewPlaceholder project={project} note={t.preview} />
         )}
       </div>
     </div>
   );
 }
 
-function ProjectRow({ project, index }: { project: Project; index: number }) {
+function ProjectRow({
+  project,
+  index,
+  lang,
+  t,
+}: {
+  project: Project;
+  index: number;
+  lang: Lang;
+  t: Copy["development"];
+}) {
+  const text = project[lang];
   const number = String(index + 1).padStart(2, "0");
   const flipped = index % 2 === 1;
 
@@ -91,6 +111,7 @@ function ProjectRow({ project, index }: { project: Project; index: number }) {
           <BrowserFrame
             project={project}
             screenshot={projectScreenshot(project.slug)}
+            t={t}
           />
         </Tilt>
       </Reveal>
@@ -99,10 +120,10 @@ function ProjectRow({ project, index }: { project: Project; index: number }) {
         <p className="flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.22em] text-ash">
           <span className="text-ember">{number}</span>
           <span aria-hidden className="h-px w-8 bg-line" />
-          {project.kind}
+          {text.kind}
           <span className="ml-1 inline-flex items-center gap-2 rounded-full border border-line px-3 py-1 text-bone">
             <span className="size-1.5 rounded-full bg-emerald-400" />
-            {project.status}
+            {text.status}
           </span>
         </p>
 
@@ -110,26 +131,26 @@ function ProjectRow({ project, index }: { project: Project; index: number }) {
           {project.title}
         </h3>
         <p className="mt-5 max-w-md text-lg leading-relaxed text-bone/75">
-          {project.summary}
+          {text.summary}
         </p>
 
         <dl className="mt-8 grid max-w-md grid-cols-2 gap-x-6 gap-y-5 border-t border-line pt-6 text-sm">
           <div>
             <dt className="font-mono text-[10px] uppercase tracking-[0.22em] text-ash">
-              Role
+              {t.role}
             </dt>
-            <dd className="mt-1.5">{project.role}</dd>
+            <dd className="mt-1.5">{text.role}</dd>
           </div>
           <div>
             <dt className="font-mono text-[10px] uppercase tracking-[0.22em] text-ash">
-              Address
+              {t.address}
             </dt>
             <dd className="mt-1.5">{project.displayUrl}</dd>
           </div>
           {project.stack.length > 0 && (
             <div className="col-span-2">
               <dt className="font-mono text-[10px] uppercase tracking-[0.22em] text-ash">
-                Built with
+                {t.builtWith}
               </dt>
               <dd className="mt-2.5 flex flex-wrap gap-2">
                 {project.stack.map((tool) => (
@@ -151,8 +172,8 @@ function ProjectRow({ project, index }: { project: Project; index: number }) {
           rel="noopener noreferrer"
           className="mt-9"
         >
-          Visit live site
-          <span className="sr-only"> (opens in a new tab)</span>
+          {t.visit}
+          <span className="sr-only"> {t.newTab}</span>
         </ButtonLink>
       </Reveal>
     </article>
@@ -160,7 +181,7 @@ function ProjectRow({ project, index }: { project: Project; index: number }) {
 }
 
 /** An invitation where the next project will go. */
-function NextProject({ index }: { index: number }) {
+function NextProject({ index, t }: { index: number; t: Copy["development"] }) {
   return (
     <Reveal>
       <a
@@ -172,7 +193,7 @@ function NextProject({ index }: { index: number }) {
             <span className="text-ember">
               {String(index + 1).padStart(2, "0")}
             </span>{" "}
-            — Next build
+            — {t.nextLabel}
           </span>
           <span className="grid size-12 place-items-center rounded-full border border-line transition-all duration-500 ease-expo group-hover:rotate-90 group-hover:border-ember group-hover:bg-ember group-hover:text-ink">
             <Plus className="size-5" />
@@ -181,12 +202,11 @@ function NextProject({ index }: { index: number }) {
 
         <span className="mt-10 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <span className="text-[clamp(3rem,9vw,7.5rem)] font-medium leading-[0.9] tracking-[-0.045em]">
-            Yours
+            {t.nextTitle}
             <span className="font-serif font-normal italic text-ember">?</span>
           </span>
           <span className="max-w-sm text-base leading-relaxed text-ash md:pb-3 md:text-lg">
-            More projects are on the way. If you need a website, the next one
-            here could be yours.
+            {t.nextText}
           </span>
         </span>
       </a>
@@ -194,25 +214,32 @@ function NextProject({ index }: { index: number }) {
   );
 }
 
-export function Development() {
+export function Development({ lang, t }: { lang: Lang; t: Copy }) {
+  const copy = t.development;
+
   return (
     <section id="development" className="px-5 py-20 sm:px-8 md:py-28 lg:px-12">
       <div className="mx-auto max-w-[1400px]">
         <SectionHeading
           index="03"
-          label="Development"
-          plain="Built for"
-          accent="the web."
+          label={copy.label}
+          plain={copy.headingPlain}
+          accent={copy.headingAccent}
         >
-          I build websites end to end — the part you see and the part that makes
-          it work.
+          {copy.intro}
         </SectionHeading>
 
         <div className="space-y-20 md:space-y-28">
           {projects.map((project, index) => (
-            <ProjectRow key={project.slug} project={project} index={index} />
+            <ProjectRow
+              key={project.slug}
+              project={project}
+              index={index}
+              lang={lang}
+              t={copy}
+            />
           ))}
-          <NextProject index={projects.length} />
+          <NextProject index={projects.length} t={copy} />
         </div>
       </div>
     </section>

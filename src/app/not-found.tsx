@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { ButtonLink } from "@/components/ui/Button";
+import { TransitionLink } from "@/components/TransitionLink";
+import { ArrowUpRight } from "@/components/ui/icons";
 
 export const metadata: Metadata = { title: "Page not found" };
 
@@ -18,9 +19,15 @@ export default function NotFound() {
           to see here.
         </span>
       </h1>
-      <ButtonLink href="/" className="mt-10">
+      <TransitionLink
+        href="/"
+        className="group mt-10 inline-flex items-center gap-3 rounded-full bg-bone py-2 pl-6 pr-2 text-sm font-medium text-ink transition-colors duration-300 hover:bg-ember"
+      >
         Back to the portfolio
-      </ButtonLink>
+        <span className="grid size-9 place-items-center rounded-full bg-ink text-bone">
+          <ArrowUpRight className="size-4" />
+        </span>
+      </TransitionLink>
     </main>
   );
 }

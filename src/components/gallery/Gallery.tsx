@@ -3,12 +3,14 @@
 import { AnimatePresence, motion } from "motion/react";
 import { type CSSProperties, useMemo, useState } from "react";
 import type { GalleryItem } from "@/content/media";
+import type { Copy } from "@/content/site";
 import { ArrowUpRight } from "../ui/icons";
 import { Frame } from "./Frame";
 import { Lightbox } from "./Lightbox";
 
 const EXPO = [0.16, 1, 0.3, 1] as const;
-const ALL = "All";
+/** Marks the "show everything" filter. Not a category name a folder can produce. */
+const ALL = "\u0000all";
 
 /**
  * The grid is a masonry wall: photos keep their own proportions and fill the
@@ -48,10 +50,12 @@ function label(item: GalleryItem) {
 function Tile({
   item,
   index,
+  t,
   onOpen,
 }: {
   item: GalleryItem;
   index: number;
+  t: Copy["photography"];
   onOpen: () => void;
 }) {
   return (
@@ -63,7 +67,7 @@ function Tile({
         type="button"
         data-cursor="view"
         onClick={onOpen}
-        aria-label={`Open in viewer: ${label(item)}`}
+        aria-label={`${t.open}: ${label(item)}`}
         className="group relative block h-full w-full overflow-hidden rounded-xl bg-coal text-left"
         initial={{ opacity: 0, y: 32 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -71,11 +75,18 @@ function Tile({
         transition={{ duration: 0.9, delay: (index % 3) * 0.07, ease: EXPO }}
       >
         <span className="absolute inset-0 transition-transform duration-[900ms] ease-expo group-hover:scale-[1.045] group-focus-visible:scale-[1.045]">
-          <Frame item={item} sizes="(min-width: 1024px) 33vw, 50vw" />
+          <Frame
+            item={item}
+            sizes="(min-width: 1024px) 33vw, 50vw"
+            placeholder={t.placeholder}
+          />
         </span>
 
         {/* Caption, shown on hover and keyboard focus */}
-        <span className="pointer-events-none absolute inset-0 flex items-end justify-between gap-3 bg-linear-to-t from-black/70 via-black/10 to-transparent p-3 opacity-0 transition-opacity duration-500 group-hover:opacity-100 group-focus-visible:opacity-100 sm:p-4">
+        <span
+          data-theme="dark"
+          className="pointer-events-none absolute inset-0 flex items-end justify-between gap-3 bg-linear-to-t from-black/70 via-black/10 to-transparent p-3 opacity-0 transition-opacity duration-500 group-hover:opacity-100 group-focus-visible:opacity-100 sm:p-4"
+        >
           <span className="min-w-0">
             <span className="block font-mono text-[10px] uppercase tracking-[0.2em] text-bone/70">
               {item.category}
@@ -95,7 +106,13 @@ function Tile({
   );
 }
 
-export function Gallery({ items }: { items: GalleryItem[] }) {
+export function Gallery({
+  items,
+  t,
+}: {
+  items: GalleryItem[];
+  t: Copy["photography"];
+}) {
   const [filter, setFilter] = useState(ALL);
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
@@ -123,7 +140,7 @@ export function Gallery({ items }: { items: GalleryItem[] }) {
       {categories.length > 1 && (
         <div
           role="group"
-          aria-label="Filter photos by category"
+          aria-label={t.filter}
           className="mb-8 flex flex-wrap gap-2 md:mb-10"
         >
           {filters.map(([name, count]) => {
@@ -140,7 +157,7 @@ export function Gallery({ items }: { items: GalleryItem[] }) {
                     : "border-line bg-ink/40 text-ash hover:border-bone/50 hover:text-bone"
                 }`}
               >
-                {name}
+                {name === ALL ? t.all : name}
                 <sup className="ml-1.5 font-mono text-[10px] opacity-60">
                   {count}
                 </sup>
@@ -161,6 +178,7 @@ export function Gallery({ items }: { items: GalleryItem[] }) {
               key={item.id}
               item={item}
               index={index}
+              t={t}
               onOpen={() => setOpenIndex(index)}
             />
           ))}
@@ -172,6 +190,7 @@ export function Gallery({ items }: { items: GalleryItem[] }) {
           <Lightbox
             items={visible}
             index={openIndex}
+            t={t}
             onNavigate={setOpenIndex}
             onClose={() => setOpenIndex(null)}
           />

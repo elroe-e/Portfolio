@@ -4,6 +4,7 @@ import { AnimatePresence, motion, type PanInfo } from "motion/react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import type { GalleryItem } from "@/content/media";
+import type { Copy } from "@/content/site";
 import { useOverlay } from "@/lib/useOverlay";
 import { ArrowLeft, ArrowRight, Close } from "../ui/icons";
 import { Frame } from "./Frame";
@@ -26,7 +27,7 @@ const slide = {
 };
 
 const controlButton =
-  "grid size-11 place-items-center rounded-full border border-white/15 bg-white/5 text-bone transition-colors duration-300 hover:bg-bone hover:text-ink";
+  "grid size-11 place-items-center rounded-full border border-bone/15 bg-bone/5 text-bone transition-colors duration-300 hover:bg-bone hover:text-ink";
 
 /**
  * Full-screen photo viewer.
@@ -35,11 +36,13 @@ const controlButton =
 export function Lightbox({
   items,
   index,
+  t,
   onNavigate,
   onClose,
 }: {
   items: GalleryItem[];
   index: number;
+  t: Copy["photography"];
   onNavigate: (index: number) => void;
   onClose: () => void;
 }) {
@@ -85,8 +88,9 @@ export function Lightbox({
     <motion.div
       role="dialog"
       aria-modal="true"
-      aria-label="Photo viewer"
-      className="fixed inset-0 z-[70] flex flex-col bg-black/95"
+      aria-label={t.viewer}
+      data-theme="dark"
+      className="fixed inset-0 z-[70] flex flex-col bg-black/95 text-bone"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
@@ -98,19 +102,19 @@ export function Lightbox({
           aria-live="polite"
           className="font-mono text-xs uppercase tracking-[0.2em] text-ash"
         >
-          <span className="sr-only">Photo </span>
+          <span className="sr-only">{t.photo} </span>
           <span className="text-bone">
             {String(index + 1).padStart(2, "0")}
           </span>
           <span aria-hidden> / </span>
-          <span className="sr-only"> of </span>
+          <span className="sr-only"> {t.of} </span>
           {String(items.length).padStart(2, "0")}
         </p>
         <button
           ref={closeButton}
           type="button"
           onClick={onClose}
-          aria-label="Close photo viewer"
+          aria-label={t.close}
           className={controlButton}
         >
           <Close className="size-5" />
@@ -139,7 +143,12 @@ export function Lightbox({
               width: `min(100%, calc((100svh - 11rem) * ${ratio}))`,
             }}
           >
-            <Frame item={item} sizes="100vw" large />
+            <Frame
+              item={item}
+              sizes="100vw"
+              large
+              placeholder={t.placeholder}
+            />
           </motion.figure>
         </AnimatePresence>
 
@@ -147,7 +156,7 @@ export function Lightbox({
           <>
             <button
               type="button"
-              aria-label="Previous photo"
+              aria-label={t.previous}
               onClick={(event) => {
                 event.stopPropagation();
                 step(-1);
@@ -158,7 +167,7 @@ export function Lightbox({
             </button>
             <button
               type="button"
-              aria-label="Next photo"
+              aria-label={t.next}
               onClick={(event) => {
                 event.stopPropagation();
                 step(1);
@@ -179,7 +188,7 @@ export function Lightbox({
           <div className="flex gap-2 sm:hidden">
             <button
               type="button"
-              aria-label="Previous photo"
+              aria-label={t.previous}
               onClick={(event) => {
                 event.stopPropagation();
                 step(-1);
@@ -190,7 +199,7 @@ export function Lightbox({
             </button>
             <button
               type="button"
-              aria-label="Next photo"
+              aria-label={t.next}
               onClick={(event) => {
                 event.stopPropagation();
                 step(1);

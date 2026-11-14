@@ -2,12 +2,20 @@
 
 import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useState } from "react";
-import { navLinks, site } from "@/content/site";
+import {
+  type Copy,
+  type Lang,
+  languages,
+  sectionIds,
+  settings,
+} from "@/content/site";
 import { useOverlay } from "@/lib/useOverlay";
+import { ThemeToggle } from "./ThemeToggle";
+import { TransitionLink } from "./TransitionLink";
 import { ArrowUpRight } from "./ui/icons";
 
 const EXPO = [0.16, 1, 0.3, 1] as const;
-const SECTION_IDS = ["top", ...navLinks.map((link) => link.id)];
+const OBSERVED = ["top", ...sectionIds];
 const BEHIND_MENU = ["main", "footer"] as const;
 
 /** Reports which section is crossing the middle of the screen. */
@@ -25,7 +33,7 @@ function useActiveSection() {
       { rootMargin: "-45% 0px -50% 0px" },
     );
 
-    for (const id of SECTION_IDS) {
+    for (const id of OBSERVED) {
       const element = document.getElementById(id);
       if (element) observer.observe(element);
     }
@@ -35,13 +43,48 @@ function useActiveSection() {
   return active;
 }
 
-function MobileMenu({ onClose }: { onClose: () => void }) {
+/** "EN | አማ" — the current language is highlighted, the other one is a link. */
+function LanguageSwitch({ lang, t }: { lang: Lang; t: Copy["nav"] }) {
+  return (
+    <div
+      role="group"
+      aria-label={t.language}
+      className="flex items-center rounded-full border border-line p-0.5 text-xs"
+    >
+      {(Object.keys(languages) as Lang[]).map((code) => {
+        const option = languages[code];
+        const current = code === lang;
+        const style = `rounded-full px-2.5 py-1.5 transition-colors duration-300 ${
+          current ? "bg-bone text-ink" : "text-ash hover:text-bone"
+        }`;
+        return current ? (
+          <span key={code} lang={code} aria-current="true" className={style}>
+            {option.short}
+          </span>
+        ) : (
+          <TransitionLink
+            key={code}
+            href={option.path}
+            hrefLang={code}
+            lang={code}
+            aria-label={t.switchLanguage}
+            className={style}
+          >
+            {option.short}
+          </TransitionLink>
+        );
+      })}
+    </div>
+  );
+}
+
+function MobileMenu({ t, onClose }: { t: Copy; onClose: () => void }) {
   useOverlay(onClose, BEHIND_MENU);
 
   const contacts = [
-    site.contact.telegram,
-    site.contact.instagram,
-    site.contact.phone,
+    { label: t.contact.telegram, ...settings.contact.telegram },
+    { label: t.contact.instagram, ...settings.contact.instagram },
+    { label: t.contact.phone, ...settings.contact.phone },
   ];
 
   return (
@@ -55,10 +98,10 @@ function MobileMenu({ onClose }: { onClose: () => void }) {
     >
       <nav aria-label="Mobile">
         <ul>
-          {navLinks.map((link, index) => (
-            <li key={link.id} className="overflow-hidden border-b border-line">
+          {sectionIds.map((id, index) => (
+            <li key={id} className="overflow-hidden border-b border-line">
               <motion.a
-                href={`#${link.id}`}
+                href={`#${id}`}
                 onClick={onClose}
                 className="flex items-baseline gap-4 py-4"
                 initial={{ y: "110%" }}
@@ -73,7 +116,7 @@ function MobileMenu({ onClose }: { onClose: () => void }) {
                   {String(index + 1).padStart(2, "0")}
                 </span>
                 <span className="text-[2.6rem] font-medium leading-none tracking-[-0.03em]">
-                  {link.label}
+                  {t.nav[id]}
                 </span>
               </motion.a>
             </li>
@@ -88,7 +131,7 @@ function MobileMenu({ onClose }: { onClose: () => void }) {
         transition={{ duration: 0.6, delay: 0.45 }}
       >
         {contacts.map((contact) => (
-          <li key={contact.label}>
+          <li key={contact.href}>
             <a
               href={contact.href}
               className="flex items-center justify-between py-1"
@@ -103,7 +146,7 @@ function MobileMenu({ onClose }: { onClose: () => void }) {
   );
 }
 
-export function Nav() {
+export function Nav({ lang, t }: { lang: Lang; t: Copy }) {
   const active = useActiveSection();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -131,25 +174,25 @@ export function Nav() {
           scrolled && !open ? "border-line bg-ink/90" : "border-transparent"
         }`}
       >
-        <div className="mx-auto flex h-16 max-w-[1400px] items-center justify-between px-5 sm:px-8 lg:px-12">
+        <div className="mx-auto flex h-16 max-w-[1400px] items-center justify-between gap-3 px-5 sm:px-8 lg:px-12">
           <a
             href="#top"
             onClick={() => setOpen(false)}
-            aria-label={`${site.name} — back to top`}
+            aria-label={`${settings.name.first} ${settings.name.last} — ${t.nav.home}`}
             className="text-lg font-medium tracking-tight"
           >
-            {site.firstName}
+            {settings.name.first}
             <span className="text-ember">.</span>
           </a>
 
-          <nav aria-label="Main" className="hidden md:block">
+          <nav aria-label="Main" className="hidden lg:block">
             <ul className="flex items-center gap-1">
-              {navLinks.map((link) => {
-                const current = active === link.id;
+              {sectionIds.map((id) => {
+                const current = active === id;
                 return (
-                  <li key={link.id}>
+                  <li key={id}>
                     <a
-                      href={`#${link.id}`}
+                      href={`#${id}`}
                       aria-current={current ? "true" : undefined}
                       className={`relative block rounded-full px-4 py-2 text-sm transition-colors duration-300 ${
                         current ? "text-bone" : "text-ash hover:text-bone"
@@ -158,7 +201,7 @@ export function Nav() {
                       {current && (
                         <motion.span
                           layoutId="nav-active"
-                          className="absolute inset-0 rounded-full bg-white/10"
+                          className="absolute inset-0 rounded-full bg-bone/10"
                           transition={{
                             type: "spring",
                             stiffness: 380,
@@ -166,7 +209,7 @@ export function Nav() {
                           }}
                         />
                       )}
-                      <span className="relative">{link.label}</span>
+                      <span className="relative">{t.nav[id]}</span>
                     </a>
                   </li>
                 );
@@ -174,40 +217,46 @@ export function Nav() {
             </ul>
           </nav>
 
-          <a
-            href="#contact"
-            className="group hidden items-center gap-2 rounded-full border border-line px-4 py-2 text-sm transition-colors duration-300 hover:border-ember hover:bg-ember hover:text-ink md:inline-flex"
-          >
-            Let&apos;s talk
-            <ArrowUpRight className="size-4 transition-transform duration-300 group-hover:rotate-45" />
-          </a>
+          <div className="flex items-center gap-2">
+            <LanguageSwitch lang={lang} t={t.nav} />
+            <ThemeToggle labels={t.nav} />
+            <a
+              href="#contact"
+              className="group hidden items-center gap-2 rounded-full border border-line px-4 py-2 text-sm transition-colors duration-300 hover:border-ember hover:bg-ember hover:text-ink lg:inline-flex"
+            >
+              {t.nav.cta}
+              <ArrowUpRight className="size-4 transition-transform duration-300 group-hover:rotate-45" />
+            </a>
 
-          <button
-            type="button"
-            className="relative -mr-2 grid size-11 place-items-center md:hidden"
-            aria-expanded={open}
-            aria-controls="mobile-menu"
-            onClick={() => setOpen((value) => !value)}
-          >
-            <span className="sr-only">{open ? "Close menu" : "Open menu"}</span>
-            <span aria-hidden className="relative block h-3 w-6">
-              <span
-                className={`absolute left-0 top-0 h-px w-full bg-bone transition-transform duration-300 ease-expo ${
-                  open ? "translate-y-[6px] rotate-45" : ""
-                }`}
-              />
-              <span
-                className={`absolute bottom-0 left-0 h-px w-full bg-bone transition-transform duration-300 ease-expo ${
-                  open ? "-translate-y-[5px] -rotate-45" : ""
-                }`}
-              />
-            </span>
-          </button>
+            <button
+              type="button"
+              className="relative -mr-2 grid size-11 place-items-center lg:hidden"
+              aria-expanded={open}
+              aria-controls="mobile-menu"
+              onClick={() => setOpen((value) => !value)}
+            >
+              <span className="sr-only">
+                {open ? t.nav.closeMenu : t.nav.openMenu}
+              </span>
+              <span aria-hidden className="relative block h-3 w-6">
+                <span
+                  className={`absolute left-0 top-0 h-px w-full bg-bone transition-transform duration-300 ease-expo ${
+                    open ? "translate-y-[6px] rotate-45" : ""
+                  }`}
+                />
+                <span
+                  className={`absolute bottom-0 left-0 h-px w-full bg-bone transition-transform duration-300 ease-expo ${
+                    open ? "-translate-y-[5px] -rotate-45" : ""
+                  }`}
+                />
+              </span>
+            </button>
+          </div>
         </div>
       </header>
 
       <AnimatePresence>
-        {open && <MobileMenu onClose={() => setOpen(false)} />}
+        {open && <MobileMenu t={t} onClose={() => setOpen(false)} />}
       </AnimatePresence>
     </>
   );

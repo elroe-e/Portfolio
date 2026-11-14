@@ -1,0 +1,13 @@
+{
+  "name": { "first": "Elroe", "last": "Fikremariam" },
+  "available": true,
+  "heroPhotos": [],
+  "contact": {
+    "telegram": { "value": "@ELR0E", "href": "https://t.me/ELR0E" },
+    "instagram": {
+      "value": "@elroe_e",
+      "href": "https://www.instagram.com/elroe_e/"
+    },
+    "phone": { "value": "+251 99 426 1461", "href": "tel:+251994261461" }
+  }
+}

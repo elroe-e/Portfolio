@@ -1,6 +1,6 @@
-import { site } from "@/content/site";
+import { type Copy, site } from "@/content/site";
 
-export function Footer() {
+export function Footer({ t }: { t: Copy }) {
   return (
     <footer
       id="footer"
@@ -9,6 +9,7 @@ export function Footer() {
       <div className="mx-auto max-w-[1400px]">
         <p
           aria-hidden
+          lang="en"
           className="text-outline select-none text-center text-[clamp(5rem,24vw,24rem)] font-medium leading-[0.85] tracking-[-0.05em]"
         >
           {site.firstName}
@@ -16,9 +17,9 @@ export function Footer() {
 
         <div className="mt-10 flex flex-col gap-4 font-mono text-[11px] uppercase tracking-[0.2em] text-ash md:flex-row md:items-center md:justify-between">
           <p>© {site.name}</p>
-          <p>Photography &amp; full-stack development</p>
+          <p>{t.footer.tagline}</p>
           <a href="#top" className="transition-colors hover:text-bone">
-            Back to top ↑
+            {t.footer.top} ↑
           </a>
         </div>
       </div>

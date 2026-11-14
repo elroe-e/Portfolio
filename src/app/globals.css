@@ -15,8 +15,55 @@
   --ember: #ff6a3d; /* accent */
   --line: rgb(255 255 255 / 0.1); /* hairlines */
 
+  /* Background atmosphere */
+  --glow-warm: rgb(255 106 61 / 0.16);
+  --glow-cool: rgb(88 116 255 / 0.11);
+  --vignette: rgb(0 0 0 / 0.55);
+  --grain: 0.055;
+
   /* How long the opening animation holds before the page is revealed. */
   --intro: 1500ms;
+}
+
+/* Dark is the default. Images, the photo viewer and placeholders carry
+   data-theme="dark" so they keep a dark mount in the light theme too. */
+[data-theme="dark"] {
+  color-scheme: dark;
+  --ink: #08080a;
+  --coal: #121215;
+  --bone: #f3efe8;
+  --ash: #a39f97;
+  --ember: #ff6a3d;
+  --line: rgb(255 255 255 / 0.1);
+}
+
+/* Light theme: warm paper instead of black. */
+[data-theme="light"] {
+  color-scheme: light;
+  --ink: #f3efe7;
+  --coal: #e8e2d6;
+  --bone: #141416;
+  --ash: #5e5a53;
+  --ember: #d9481c;
+  --line: rgb(20 20 22 / 0.13);
+
+  --glow-warm: rgb(255 106 61 / 0.2);
+  --glow-cool: rgb(88 116 255 / 0.1);
+  --vignette: rgb(120 100 80 / 0.16);
+  --grain: 0.08;
+}
+
+/* Colours cross-fade for a moment when the theme is switched. */
+html.theme-switching,
+html.theme-switching *,
+html.theme-switching *::before,
+html.theme-switching *::after {
+  transition:
+    background-color 400ms ease,
+    border-color 400ms ease,
+    color 400ms ease,
+    fill 400ms ease,
+    stroke 400ms ease !important;
 }
 
 @theme inline {
@@ -28,10 +75,11 @@
   --color-line: var(--line);
 
   --font-sans:
-    var(--font-geist-sans), ui-sans-serif, system-ui, -apple-system, "Segoe UI",
-    sans-serif;
+    var(--font-geist-sans), var(--font-ethiopic-sans), ui-sans-serif, system-ui,
+    -apple-system, "Segoe UI", sans-serif;
   --font-serif:
-    var(--font-instrument-serif), ui-serif, Georgia, "Times New Roman", serif;
+    var(--font-instrument-serif), var(--font-ethiopic-serif), ui-serif, Georgia,
+    "Times New Roman", serif;
   --font-mono:
     var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
 
@@ -178,12 +226,8 @@ html.is-locked {
 /* Soft colour glows that sit behind the 3D scene. */
 @utility backdrop-glow {
   background:
-    radial-gradient(60% 55% at 85% 0%, rgb(255 106 61 / 0.16), transparent 62%),
-    radial-gradient(
-      55% 50% at 0% 100%,
-      rgb(88 116 255 / 0.11),
-      transparent 60%
-    ),
+    radial-gradient(60% 55% at 85% 0%, var(--glow-warm), transparent 62%),
+    radial-gradient(55% 50% at 0% 100%, var(--glow-cool), transparent 60%),
     radial-gradient(
       40% 35% at 50% 55%,
       rgb(255 255 255 / 0.025),
@@ -197,12 +241,17 @@ html.is-locked {
   background-size: 240px 240px;
 }
 
+/* Dark specks instead of light ones on the light theme. */
+[data-theme="light"] .grain {
+  filter: invert(1);
+}
+
 /* Darkens the edges of the screen so the centre reads clearly. */
 @utility vignette {
   background: radial-gradient(
     120% 90% at 50% 45%,
     transparent 55%,
-    rgb(0 0 0 / 0.55) 100%
+    var(--vignette) 100%
   );
 }
 
@@ -271,6 +320,59 @@ html.is-locked {
 /* ------------------------------------------------------------------ */
 /* Reduced motion                                                      */
 /* ------------------------------------------------------------------ */
+
+/* ------------------------------------------------------------------ */
+/* Page transitions                                                     */
+/* Moving to another page closes this shutter (TransitionLink.tsx);    */
+/* the next page's intro opens it again.                                */
+/* ------------------------------------------------------------------ */
+
+.leave-shutter {
+  pointer-events: none;
+}
+
+.leave-shutter > div {
+  transition: transform 550ms var(--ease-expo);
+}
+
+.leave-shutter-top {
+  transform: translateY(-101%);
+}
+
+.leave-shutter-bottom {
+  transform: translateY(101%);
+}
+
+html.is-leaving .leave-shutter {
+  pointer-events: auto;
+}
+
+html.is-leaving .leave-shutter > div {
+  transform: translateY(0);
+}
+
+/* Arriving through a transition: skip the name card and open straight away. */
+html.arriving {
+  --intro: 150ms;
+}
+
+html.arriving .intro-mark {
+  display: none;
+}
+
+/* ------------------------------------------------------------------ */
+/* Amharic                                                              */
+/* Ge'ez script reads best without the tight Latin letter-spacing.     */
+/* ------------------------------------------------------------------ */
+
+:lang(am) {
+  letter-spacing: normal !important;
+}
+
+.lang-am h2,
+.lang-am h3 {
+  line-height: 1.12;
+}
 
 @media (prefers-reduced-motion: reduce) {
   :root {

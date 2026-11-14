@@ -13,6 +13,7 @@
  */
 
 import generated from "./media.generated.json";
+import { settings } from "./site";
 
 export type MediaAsset = {
   src: string;
@@ -89,6 +90,23 @@ export const galleryItems: GalleryItem[] =
     : placeholders;
 
 export const hasRealPhotos = manifest.photos.length > 0;
+
+/** A photo shown floating in the hero, sized for the 3D scene. */
+export type HeroPhoto = { src: string; width: number; height: number };
+
+/**
+ * Up to three photos for the hero: the ones picked in settings.json (or the
+ * admin page), otherwise the first two in the gallery.
+ */
+export const heroPhotos: HeroPhoto[] = (() => {
+  const picked = settings.heroPhotos
+    .map((src) => manifest.photos.find((photo) => photo.src === src))
+    .filter((photo) => photo !== undefined);
+  const chosen = picked.length > 0 ? picked : manifest.photos.slice(0, 2);
+  return chosen
+    .slice(0, 3)
+    .map(({ src, width, height }) => ({ src, width, height }));
+})();
 
 export const portrait: MediaAsset | null = manifest.portrait;
 

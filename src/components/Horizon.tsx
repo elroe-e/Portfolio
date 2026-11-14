@@ -1,4 +1,4 @@
-import { upcoming } from "@/content/site";
+import type { Copy } from "@/content/site";
 import { Reveal } from "./ui/Reveal";
 import { SectionHeading } from "./ui/SectionHeading";
 
@@ -14,16 +14,16 @@ function AppsVisual() {
       <div className="absolute bottom-0 left-1/2 h-44 w-28 -translate-x-[125%] translate-y-10 -rotate-12 rounded-t-3xl border border-b-0 border-bone/15 bg-ink/80" />
       <div className="absolute bottom-0 left-1/2 h-44 w-28 translate-x-[25%] translate-y-10 rotate-12 rounded-t-3xl border border-b-0 border-bone/15 bg-ink/80" />
 
-      <div className="relative h-52 w-32 translate-y-6 rounded-t-[1.75rem] border border-b-0 border-bone/30 bg-ink p-2.5 shadow-2xl shadow-black">
-        <div className="mx-auto h-1.5 w-10 rounded-full bg-white/15" />
+      <div className="relative h-52 w-32 translate-y-6 rounded-t-[1.75rem] border border-b-0 border-bone/30 bg-ink p-2.5 shadow-2xl shadow-black/40">
+        <div className="mx-auto h-1.5 w-10 rounded-full bg-bone/15" />
         <div className="mt-3 h-14 animate-shimmer rounded-xl bg-ember/85" />
         <div className="mt-2.5 space-y-1.5">
-          <div className="h-2 w-3/4 animate-shimmer rounded-full bg-white/25 [animation-delay:300ms]" />
-          <div className="h-2 w-1/2 animate-shimmer rounded-full bg-white/15 [animation-delay:600ms]" />
+          <div className="h-2 w-3/4 animate-shimmer rounded-full bg-bone/25 [animation-delay:300ms]" />
+          <div className="h-2 w-1/2 animate-shimmer rounded-full bg-bone/15 [animation-delay:600ms]" />
         </div>
         <div className="mt-3 grid grid-cols-2 gap-1.5">
-          <div className="h-10 rounded-lg bg-white/10" />
-          <div className="h-10 rounded-lg bg-white/10" />
+          <div className="h-10 rounded-lg bg-bone/10" />
+          <div className="h-10 rounded-lg bg-bone/10" />
         </div>
       </div>
     </div>
@@ -42,7 +42,7 @@ const SPROCKETS =
   "repeating-linear-gradient(90deg, rgb(255 255 255 / 0.28) 0 9px, transparent 9px 22px)";
 
 /** A strip of film sliding past. */
-function FilmVisual() {
+function FilmVisual({ rec }: { rec: string }) {
   const frames = (key: string) => (
     <div key={key} className="flex shrink-0 gap-2 pr-2">
       {FILM_TONES.map((tone) => (
@@ -71,34 +71,37 @@ function FilmVisual() {
 
       <p className="absolute left-[16%] top-4 flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.2em] text-bone/70">
         <span className="size-2 animate-shimmer rounded-full bg-red-500" />
-        Rec
+        {rec}
       </p>
     </div>
   );
 }
 
-const visuals: Record<string, () => React.JSX.Element> = {
-  apps: AppsVisual,
-  cinematography: FilmVisual,
-};
+export function Horizon({ t }: { t: Copy }) {
+  const copy = t.next;
+  const items = [
+    { id: "apps", ...copy.items.apps, visual: <AppsVisual /> },
+    {
+      id: "cinematography",
+      ...copy.items.cinematography,
+      visual: <FilmVisual rec={copy.rec} />,
+    },
+  ];
 
-export function Horizon() {
   return (
     <section id="next" className="px-5 py-20 sm:px-8 md:py-28 lg:px-12">
       <div className="mx-auto max-w-[1400px]">
         <SectionHeading
           index="04"
-          label="Next"
-          plain="On the"
-          accent="horizon."
+          label={copy.label}
+          plain={copy.headingPlain}
+          accent={copy.headingAccent}
         >
-          Two things I&apos;m working towards. It&apos;s too early to show them
-          — but they&apos;re coming.
+          {copy.intro}
         </SectionHeading>
 
         <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
-          {upcoming.map((item, index) => {
-            const Visual = visuals[item.id];
+          {items.map((item, index) => {
             return (
               <Reveal key={item.id} delay={index * 0.1}>
                 <article className="group relative h-full overflow-hidden rounded-2xl border border-line bg-coal/90 transition-colors duration-500 hover:border-bone/30">
@@ -111,11 +114,11 @@ export function Horizon() {
                       {item.status}
                     </span>
                     <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-ash">
-                      Coming soon
+                      {copy.soon}
                     </span>
                   </div>
 
-                  {Visual && <Visual />}
+                  {item.visual}
 
                   <div className="border-t border-line px-7 py-7 md:px-9 md:py-8">
                     <h3 className="text-3xl font-medium tracking-[-0.03em] md:text-4xl">

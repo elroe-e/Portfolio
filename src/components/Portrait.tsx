@@ -4,10 +4,23 @@ import { motion, useScroll, useTransform } from "motion/react";
 import Image from "next/image";
 import { useRef } from "react";
 import type { MediaAsset } from "@/content/media";
-import { site } from "@/content/site";
 
 /** The About portrait. It drifts slightly as the page scrolls past it. */
-export function Portrait({ image }: { image: MediaAsset | null }) {
+export function Portrait({
+  image,
+  name,
+  initials,
+  alt,
+  soon,
+  mark,
+}: {
+  image: MediaAsset | null;
+  name: string;
+  initials: string;
+  alt: string;
+  soon: string;
+  mark: string;
+}) {
   const frame = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: frame,
@@ -15,20 +28,21 @@ export function Portrait({ image }: { image: MediaAsset | null }) {
   });
   const y = useTransform(scrollYProgress, [0, 1], ["-5%", "5%"]);
 
-  const initials = `${site.firstName[0]}${site.lastName[0]}`;
   const corner = "absolute size-4 border-bone/50";
 
   return (
     <figure>
+      {/* Photographs always sit on a dark mount, whichever theme is active. */}
       <div
         ref={frame}
-        className="relative aspect-[4/5] overflow-hidden rounded-2xl border border-line bg-coal"
+        data-theme="dark"
+        className="relative aspect-[4/5] overflow-hidden rounded-2xl border border-line bg-coal text-bone"
       >
         <motion.div style={{ y }} className="absolute -inset-[7%]">
           {image ? (
             <Image
               src={image.src}
-              alt={`Portrait of ${site.name}`}
+              alt={alt}
               fill
               sizes="(min-width: 768px) 40vw, 100vw"
               placeholder="blur"
@@ -60,14 +74,14 @@ export function Portrait({ image }: { image: MediaAsset | null }) {
 
         {!image && (
           <p className="absolute inset-x-0 bottom-8 text-center font-mono text-[10px] uppercase tracking-[0.25em] text-bone/50">
-            Portrait coming soon
+            {soon}
           </p>
         )}
       </div>
 
       <figcaption className="mt-4 flex items-center justify-between font-mono text-[11px] uppercase tracking-[0.2em] text-ash">
-        <span>{site.name}</span>
-        <span className="text-ember">Photo + Code</span>
+        <span>{name}</span>
+        <span className="text-ember">{mark}</span>
       </figcaption>
     </figure>
   );

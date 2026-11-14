@@ -19,10 +19,13 @@ const TONES: Array<[string, string, string]> = [
 export function Frame({
   item,
   sizes,
+  placeholder,
   large = false,
 }: {
   item: GalleryItem;
   sizes: string;
+  /** Text shown on placeholder frames, e.g. "Your photo here". */
+  placeholder: string;
   large?: boolean;
 }) {
   if (item.kind === "photo") {
@@ -46,7 +49,8 @@ export function Frame({
 
   return (
     <div
-      className="absolute inset-0"
+      data-theme="dark"
+      className="absolute inset-0 text-bone"
       style={{
         background: `radial-gradient(90% 70% at 25% 15%, ${glow}, transparent 60%), linear-gradient(155deg, ${from}, ${to})`,
       }}
@@ -69,7 +73,7 @@ export function Frame({
               large ? "text-xs" : "hidden text-[10px] sm:block"
             }`}
           >
-            Your photo here
+            {placeholder}
           </span>
         </span>
       </span>

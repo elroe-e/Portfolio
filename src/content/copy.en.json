@@ -1,0 +1,126 @@
+{
+  "meta": {
+    "title": "Photographer & Full-Stack Developer",
+    "description": "Elroe Fikremariam is a photographer and full-stack web developer. See selected photography, websites, and what is coming next."
+  },
+  "nav": {
+    "about": "About",
+    "photography": "Photography",
+    "development": "Development",
+    "next": "Next",
+    "contact": "Contact",
+    "cta": "Let's talk",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "home": "back to top",
+    "skip": "Skip to content",
+    "toLight": "Switch to light theme",
+    "toDark": "Switch to dark theme",
+    "language": "Language",
+    "switchLanguage": "Read in Amharic"
+  },
+  "hero": {
+    "available": "Available for new projects",
+    "roleA": "Photographer",
+    "roleB": "full-stack developer.",
+    "tagline": "I make images and build the websites they live on.",
+    "ctaPhoto": "See photography",
+    "ctaWeb": "See web work",
+    "scroll": "Scroll",
+    "markA": "Photo",
+    "markB": "Code"
+  },
+  "marquee": [
+    "Photography",
+    "Web development",
+    "Visual storytelling",
+    "Full-stack builds"
+  ],
+  "about": {
+    "label": "About",
+    "headingPlain": "Two crafts,",
+    "headingAccent": "one eye.",
+    "paragraphs": [
+      "I'm Elroe — a photographer and full-stack web developer. I care about the same things in both: light, composition, and the small details most people only feel.",
+      "With a camera, that means patient, honest images. With code, it means websites that load fast, read clearly and work on every screen — built end to end."
+    ],
+    "services": [
+      {
+        "title": "Photography",
+        "text": "Images made with patience and edited with restraint, delivered ready to print or post."
+      },
+      {
+        "title": "Web development",
+        "text": "Full-stack websites, from the first sketch to a live site that is fast, responsive and easy to manage."
+      }
+    ],
+    "portraitSoon": "Portrait coming soon",
+    "portraitAlt": "Portrait of Elroe Fikremariam"
+  },
+  "photography": {
+    "label": "Photography",
+    "headingPlain": "Selected",
+    "headingAccent": "frames.",
+    "intro": "A selection of recent work. Open any frame to see it full screen.",
+    "introEmpty": "The gallery is being put together — these frames mark where the photographs will hang.",
+    "all": "All",
+    "filter": "Filter photos by category",
+    "open": "Open in viewer",
+    "placeholder": "Your photo here",
+    "viewer": "Photo viewer",
+    "close": "Close photo viewer",
+    "previous": "Previous photo",
+    "next": "Next photo",
+    "photo": "Photo",
+    "of": "of",
+    "view": "View"
+  },
+  "development": {
+    "label": "Development",
+    "headingPlain": "Built for",
+    "headingAccent": "the web.",
+    "intro": "I build websites end to end — the part you see and the part that makes it work.",
+    "role": "Role",
+    "address": "Address",
+    "builtWith": "Built with",
+    "visit": "Visit live site",
+    "newTab": "(opens in a new tab)",
+    "preview": "Preview — screenshot coming soon",
+    "screenshotAlt": "Screenshot of the website",
+    "nextLabel": "Next build",
+    "nextTitle": "Yours",
+    "nextText": "More projects are on the way. If you need a website, the next one here could be yours."
+  },
+  "next": {
+    "label": "Next",
+    "headingPlain": "On the",
+    "headingAccent": "horizon.",
+    "intro": "Two things I'm working towards. It's too early to show them — but they're coming.",
+    "soon": "Coming soon",
+    "rec": "Rec",
+    "items": {
+      "apps": {
+        "title": "Mobile apps",
+        "status": "In progress",
+        "text": "I've started building apps. The first releases will land here once they're ready."
+      },
+      "cinematography": {
+        "title": "Cinematography",
+        "status": "Early days",
+        "text": "Moving from stills to motion. Reels and short films will follow when they're worth your time."
+      }
+    }
+  },
+  "contact": {
+    "label": "Contact",
+    "lines": ["Have a shoot or", "a site in mind?"],
+    "accent": "Let's talk.",
+    "telegram": "Telegram",
+    "instagram": "Instagram",
+    "phone": "Phone"
+  },
+  "footer": {
+    "tagline": "Photography & full-stack development",
+    "top": "Back to top"
+  }
+}

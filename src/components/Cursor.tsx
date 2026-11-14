@@ -12,7 +12,7 @@ const SPRING = { stiffness: 420, damping: 34, mass: 0.5 };
  * "View" over photos. It sits on top of the normal cursor and never appears
  * on touch screens.
  */
-export function Cursor() {
+export function Cursor({ viewLabel }: { viewLabel: string }) {
   const [visible, setVisible] = useState(false);
   const [mode, setMode] = useState<Mode>("idle");
   const x = useMotionValue(-100);
@@ -68,7 +68,7 @@ export function Cursor() {
         animate={{ width: size, height: size, opacity: visible ? 1 : 0 }}
         transition={{ type: "spring", stiffness: 300, damping: 26 }}
       >
-        {mode === "view" && "View"}
+        {mode === "view" && viewLabel}
       </motion.div>
     </motion.div>
   );

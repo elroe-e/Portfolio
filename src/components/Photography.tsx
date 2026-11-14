@@ -1,23 +1,24 @@
 import { galleryItems, hasRealPhotos } from "@/content/media";
+import type { Copy } from "@/content/site";
 import { Gallery } from "./gallery/Gallery";
 import { SectionHeading } from "./ui/SectionHeading";
 
-export function Photography() {
+export function Photography({ t }: { t: Copy }) {
+  const copy = t.photography;
+
   return (
     <section id="photography" className="px-5 py-20 sm:px-8 md:py-28 lg:px-12">
       <div className="mx-auto max-w-[1400px]">
         <SectionHeading
           index="02"
-          label="Photography"
-          plain="Selected"
-          accent="frames."
+          label={copy.label}
+          plain={copy.headingPlain}
+          accent={copy.headingAccent}
         >
-          {hasRealPhotos
-            ? "A selection of recent work. Open any frame to see it full screen."
-            : "The gallery is being put together — these frames mark where the photographs will hang."}
+          {hasRealPhotos ? copy.intro : copy.introEmpty}
         </SectionHeading>
 
-        <Gallery items={galleryItems} />
+        <Gallery items={galleryItems} t={copy} />
       </div>
     </section>
   );
