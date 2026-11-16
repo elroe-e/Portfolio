@@ -1,5 +1,141 @@
 {
-  "photos": [],
+  "photos": [
+    {
+      "src": "/photos/portrait/01-dsc00096-1.jpg",
+      "width": 1920,
+      "height": 2400,
+      "blurDataURL": "data:image/webp;base64,UklGRmwAAABXRUJQVlA4IGAAAAAQBACdASoTABgAPtlep0yoJaOiMBgMAQAbCWkAAC51ii1zS1HUi1JYAAD+7ZjCq2XdABU7o+o5cvOaVnQo4pKxyhG5oVSWfxorhhE5hZgyYPIWtTqZj1LpfCpavVgAAAA=",
+      "category": "Portrait",
+      "title": "Dsc00096 1",
+      "alt": "Dsc00096 1"
+    },
+    {
+      "src": "/photos/portrait/02-dsc00240.jpg",
+      "width": 1920,
+      "height": 2400,
+      "blurDataURL": "data:image/webp;base64,UklGRrgAAABXRUJQVlA4IKwAAAAwBQCdASoTABgAPtlaoEyoJSMiMAwBABsJQBfAUABp1fK1ezbCei3747TfD7RbY/ysgAD+9WbaTMiiIhrcZ8LKP0v33+2Qh02+hLO9Y39falHqkxnI5zOyCMWQVRnFz9DWEj0LRCLSjg5j+F92CLaJWt4Szizg473nepjvVjPEl/Q35J/g4TpEh37VXxdl2Puh3I0Q9MIT4sH2B/gCC4aUoY5J9fnbey4SbQAA",
+      "category": "Portrait",
+      "title": "Dsc00240",
+      "alt": "Dsc00240"
+    },
+    {
+      "src": "/photos/portrait/03-dsc00304-1.jpg",
+      "width": 1920,
+      "height": 2400,
+      "blurDataURL": "data:image/webp;base64,UklGRtgAAABXRUJQVlA4IMwAAADwBQCdASoTABgAPt1iqU+opSOiKAqpEBuJagCdISABX7sxfCVIWqOA1LC6ZQa7J2cKNkCydtc1UAD+9J1URn5l04E5YoiFdR3uuH1c3RRJBUodGSe+Cf+WMG2bk+Ny8mG0mHcM7G3EGYbD/c1UCEH5tj2hC7m2sPAEdzi1xqq6eBzo87HVphFThTvRJXbQdMtBaMVhdg0MSpCxBk+m0kHR65IRjV+edFZ4YsGdRXQxsrIFjqp9wY5tJfFaG2ToCSZC2svhV5e9Y+VdIAA=",
+      "category": "Portrait",
+      "title": "Dsc00304 1",
+      "alt": "Dsc00304 1"
+    },
+    {
+      "src": "/photos/portrait/04-photo.jpg",
+      "width": 1800,
+      "height": 2400,
+      "blurDataURL": "data:image/webp;base64,UklGRrIAAABXRUJQVlA4IKYAAAAwBQCdASoSABgAPt1iqU+opSOiKAqpEBuJaQATwBQbBEzqCtHB2iYqE5ciT7JHs4PgAAD+2V3Kzz7Pc89fcLFkF115/hJieDt39te9cEeyc0BY3LMTu1BD6ZznK36z9liYQsi/497xjswp3NXYr7O6BkbJ0jjvR3QZ3hKpyrE6cRQvtN97Sb2sf13Xu48OSOIh9OfZq6jW8h2je0gj1krAWcJbUAAA",
+      "category": "Portrait",
+      "title": "",
+      "alt": "Portrait photograph by Elroe Fikremariam"
+    },
+    {
+      "src": "/photos/portrait/05-photo.jpg",
+      "width": 1600,
+      "height": 2400,
+      "blurDataURL": "data:image/webp;base64,UklGRqQAAABXRUJQVlA4IJgAAAAwBACdASoQABgAPt1apkyopSOiMAgBEBuJaQAD5XIFTPJzyxg7YZro2kAA/uhChLc5Tu1WKiCSeAhsMIjM/xfmNxT9LYMHl9swvMQhMpUuRjtQ1LsURFoFfnCkDVnFlpD+QB6JEt9po9v2/SKLyvYFxhG/5Poon7p4OzBCP3uEiP+X3ZCyn3uwv8GZ4Cb3TNXbvkITTJAAAA==",
+      "category": "Portrait",
+      "title": "",
+      "alt": "Portrait photograph by Elroe Fikremariam"
+    },
+    {
+      "src": "/photos/portrait/06-photo.jpg",
+      "width": 1800,
+      "height": 2400,
+      "blurDataURL": "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAACwAwCdASoSABgAPt1cp0yopSOiMAgBEBuJaQAAW+qhn6XXcit8sAD+9BqbcWS1g/kk0uDluWus+pFYP23LOSl5SYP2nXppVZ3XSe8AAAA=",
+      "category": "Portrait",
+      "title": "",
+      "alt": "Portrait photograph by Elroe Fikremariam"
+    },
+    {
+      "src": "/photos/portrait/07-photo.jpg",
+      "width": 1598,
+      "height": 2400,
+      "blurDataURL": "data:image/webp;base64,UklGRn4AAABXRUJQVlA4IHIAAABwAwCdASoQABgALqVut1ujKKioiICkS0gABc6rm0diroSOudAA/voRUUuhCHBLhvU7kVuHDco/5It1SPmh8UwqZLfHJnj/5ToUSERyUbKB1OgqqKAfByQCaNbFW/ThErhtIR1m+4Zqf7JofBenOJwAAAA=",
+      "category": "Portrait",
+      "title": "",
+      "alt": "Portrait photograph by Elroe Fikremariam"
+    },
+    {
+      "src": "/photos/portrait/08-photo.jpg",
+      "width": 1800,
+      "height": 2400,
+      "blurDataURL": "data:image/webp;base64,UklGRpIAAABXRUJQVlA4IIYAAACQAwCdASoSABgAPt1kqU+opaOiKAqpEBuJZwC+SAcSsuskChgAAP7sD6vAkfyEVCUVpS/Fz2Fsm7/aYrDJ0CUsR9z2KkLX5wiYFGSdsNqZXuU4xhGjbFLWf+eu3ixkLOxQpCZI6aCL8MFLt3F02w9PG3SVrmg285uqipr5sL8MDxXWGxAAAA==",
+      "category": "Portrait",
+      "title": "",
+      "alt": "Portrait photograph by Elroe Fikremariam"
+    },
+    {
+      "src": "/photos/portrait/09-img-20261010-113305-edit-29461.jpg",
+      "width": 1807,
+      "height": 2400,
+      "blurDataURL": "data:image/webp;base64,UklGRr4AAABXRUJQVlA4ILIAAABwBQCdASoSABgAPt1mq1EopSOiqAgBEBuJQBdl4AAaZg9MGPohRfK5Ek3uT7AxBLsVeccAAP6mgucTjBhdVwtKxspIXSVfmSL3SjqK4XmwPej1dySA5YsvrHMz8N15X2I+t9t4UP4mwWulbqMBcPE5cvTrIUMA90q12scA+3YMadirEHFJxAMyW2rUxsyFLLogijIuTGPJncj+irtvSHHjFQDKB7PtzXYG1KBGdKWC6AAA",
+      "category": "Portrait",
+      "title": "Img 20261010 113305 edit 29461",
+      "alt": "Img 20261010 113305 edit 29461"
+    },
+    {
+      "src": "/photos/wedding/01-photo.jpg",
+      "width": 1800,
+      "height": 2400,
+      "blurDataURL": "data:image/webp;base64,UklGRq4AAABXRUJQVlA4IKIAAABwBQCdASoSABgAPt1iq08opaQiKAqpEBuJaQAFEB74R/j+/grZaKX8cfjSeIfQe6L/EAgAAP7r+PUfw4Mi8ID2UlJgZue7Pxv9PbnRI6mj/un+1uYLK3aYyg6XhFQZpbH8DD6HkoQxPLgdmATaj40muh+nruzBLzLFp7YZfBPTEjXNjhh5Xpx4J0RUk2J2DhebgwBWQkQoQnwxC8iVuukAAAA=",
+      "category": "Wedding",
+      "title": "",
+      "alt": "Wedding photograph by Elroe Fikremariam"
+    },
+    {
+      "src": "/photos/wedding/02-photo.jpg",
+      "width": 1800,
+      "height": 2400,
+      "blurDataURL": "data:image/webp;base64,UklGRtwAAABXRUJQVlA4INAAAABQBQCdASoSABgAPt1iq08opSOiKAqpEBuJQBOmUGdAaSoaAslfRFw03YdWtKUVpdupbuAA/pOCMdJW41efF8PXoUTi2o3TinE9p25PA681D7RHmrrTRNh4+4d+VdPGukThj9WhbkjmnVxQtNiGOwR7LWW791lflOYCAxg1feVOTVU5nxkM1+qPpK/RTD/6lr7KwR9qOTMLWM6hRgU/yD7D8yYV9eHkSrWh5Mz8O4I/f9UmX5a/V9kmbAVdD1bq5JUEq3P/PUNkHgiGfeJGgAAA",
+      "category": "Wedding",
+      "title": "",
+      "alt": "Wedding photograph by Elroe Fikremariam"
+    },
+    {
+      "src": "/photos/wedding/03-photo.jpg",
+      "width": 1800,
+      "height": 2400,
+      "blurDataURL": "data:image/webp;base64,UklGRsAAAABXRUJQVlA4ILQAAAAQBQCdASoSABgAPt1mrFCopSQiqAgBEBuJQBf9gnOzz+EOqXJ2Ed9Nd7Ja1rGUBAHAAP7pndWBfdmSDj4cGUcGdQylCEVhC/Oui6OFl86SBS132aWZpZsopDQZ8lVZcF1895KfWlwZvoNLt+PTvOOAVGN1fJcwQT8f9gSa5GiqWBK8DbbYwsBMscb7MdIAWPc2U6CAhEzrwlEeMPvtwKrVM+nK5bSBKIdL9yuQizswFn4AAAA=",
+      "category": "Wedding",
+      "title": "",
+      "alt": "Wedding photograph by Elroe Fikremariam"
+    },
+    {
+      "src": "/photos/wedding/04-photo.jpg",
+      "width": 1799,
+      "height": 2400,
+      "blurDataURL": "data:image/webp;base64,UklGRtgAAABXRUJQVlA4IMwAAAAwBQCdASoSABgAPt1orFEopaQiqAgBEBuJYgAAHRyPJSOecIjzfyimiE/IKRRep9DbAAD+5oN3eBqcDVPlTyoiZPBYRCZyZHDnJffbVdehhnYsgII8dTeMA4y+BNcRShGzDtqRx3CIoln3l/ybzr1A+tr8mFMTwT/ZBXSi8W9qfmTvJctJSlbBpaAAjcAHkSi+F8eZhLCtuUPrPfy+hJAIGOkHkXAoUIwalNzxfUYOdS3Pk8PHL1K8uJKWrSEYejLfu6o5+Fw1aYQ/oAA=",
+      "category": "Wedding",
+      "title": "",
+      "alt": "Wedding photograph by Elroe Fikremariam"
+    },
+    {
+      "src": "/photos/wedding/05-photo.jpg",
+      "width": 1599,
+      "height": 2400,
+      "blurDataURL": "data:image/webp;base64,UklGRpIAAABXRUJQVlA4IIYAAACwAwCdASoQABgAPt1apkyopSOiMAgBEBuJaQAFEAFfN96jXOXhQAD+3Nw0RDwizDCYPMFP9FUiR9nKVsm5oC8FUIqtg3IsqXP7FGYRrfwn/edMtpfZ/4+oBRwdXL8u6fytOyYgXdXDj38uOWQ9BcEZJWSes5s2Dqu7MNwlPaQ7i/8l1AAAAA==",
+      "category": "Wedding",
+      "title": "",
+      "alt": "Wedding photograph by Elroe Fikremariam"
+    },
+    {
+      "src": "/photos/wedding/06-photo.jpg",
+      "width": 2400,
+      "height": 1599,
+      "blurDataURL": "data:image/webp;base64,UklGRqoAAABXRUJQVlA4IJ4AAAAQBACdASoYABAAPt1apkyopSOiMAgBEBuJaQAATrKz4G5UU/9V5g9PfAD+7Afp8quHxm0ro0essBTNnrDfizXOryKYFmQomw36kjZUJUDRZqIgM+VP+WLtPi9jKBimqUXBJ4Q+Y/7JuyO6F6HQnOe7SKa1R9slHZX5f2J75mujyx2m7DsnPIl6r14Ipvty3Jgs6gfMv3MwaqRrgo7gAA==",
+      "category": "Wedding",
+      "title": "",
+      "alt": "Wedding photograph by Elroe Fikremariam"
+    }
+  ],
   "portrait": null,
   "projects": {}
 }

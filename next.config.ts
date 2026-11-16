@@ -1,4 +1,9 @@
+import { execFileSync } from "node:child_process";
 import type { NextConfig } from "next";
+import {
+  PHASE_DEVELOPMENT_SERVER,
+  PHASE_PRODUCTION_BUILD,
+} from "next/constants";
 
 const nextConfig: NextConfig = {
   cacheComponents: true,
@@ -19,4 +24,14 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
+export default function config(phase: string): NextConfig {
+  // Index the photos in public/ before every build and dev start, however the
+  // build is started (`npm run build`, `next build`, or a host's own command).
+  // Without this, photos added through the admin page wouldn't show up.
+  if (phase === PHASE_PRODUCTION_BUILD || phase === PHASE_DEVELOPMENT_SERVER) {
+    execFileSync(process.execPath, ["scripts/sync-photos.mjs"], {
+      stdio: "inherit",
+    });
+  }
+  return nextConfig;
+}

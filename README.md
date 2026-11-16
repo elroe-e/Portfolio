@@ -81,7 +81,7 @@ You can also drop image files (`.jpg`, `.png`, `.webp`, `.avif`) into folders:
 - As soon as one real photo exists, the placeholder frames disappear, and the
   first two photos float in the hero (or the ones you star in the admin).
 
-Photos are indexed whenever `npm run dev` or `npm run build` starts. If you add
+Photos are indexed automatically whenever the site is built or the dev server starts. If you add
 photos while the dev server is already running, run this in a second terminal:
 
 ```bash
